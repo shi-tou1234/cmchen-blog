@@ -295,7 +295,7 @@ const aboutPersonal: AboutPersonal = {
     {
       "title": "Paris-in-the-Rain",
       "artist": "Lauv",
-      "url": "/-/music/Lauv---Paris-in-the-Rain.mp3"
+      "url": "/cmchen-blog/music/Lauv---Paris-in-the-Rain.mp3"
     }
   ],
   "travelCities": [

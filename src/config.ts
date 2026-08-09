@@ -33,7 +33,7 @@ export const licenseConfig: LicenseConfig = {
 
 export const externalUrlsConfig: ExternalUrlsConfig = {
 	githubApi: "https://api.github.com",
-	githubRepo: "shi-tou1234/-",
+	githubRepo: "shi-tou1234/cmchen-blog",
 	giscusRepoId: "R_kgDORRKvYA",
 	geoDataVBase: "https://geo.datav.aliyun.com/areas_v3/bound",
 	geoDataVBaseLegacy: "https://geo.datav.aliyun.com/areas/bound",
