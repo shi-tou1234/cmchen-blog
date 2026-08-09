@@ -1,3 +1,4 @@
+import siteInfo from "@/data/site-info"
 import type {
     SiteConfig,
     ProfileConfig,
@@ -6,7 +7,7 @@ import type {
 } from "./types/config"
 
 export const siteConfig: SiteConfig = {
-    title: "cmchen的博客",
+    title: siteInfo.title,
     subTitle: "记录技术与生活",
 
     favicon: "/favicon/favicon.ico", // Path of the favicon, relative to the /public directory

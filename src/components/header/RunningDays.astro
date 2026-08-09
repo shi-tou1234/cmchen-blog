@@ -1,9 +1,10 @@
 ---
+import siteInfo from "@/data/site-info"
 const runtimeLabel = '已运行';
 const runtimeSuffix = '天';
 ---
 
-<p id="header-running-days" class="text-sm text-[var(--text-color)]/65 mt-1" data-running-since="2026-02-12" data-runtime-label={runtimeLabel} data-runtime-suffix={runtimeSuffix}>
+<p id="header-running-days" class="text-sm text-[var(--text-color)]/65 mt-1" data-running-since={siteInfo.createdAt} data-runtime-label={runtimeLabel} data-runtime-suffix={runtimeSuffix}>
   {runtimeLabel} 1 {runtimeSuffix}
 </p>
 
