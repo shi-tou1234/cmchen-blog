@@ -328,6 +328,7 @@ export {
   buildToolsLinksTs,
   buildBlogGuideContentTs,
   buildHeaderContactTs,
+  buildHomeCoverSignaturesTs,
   buildPostMarkdown,
   buildSiteInfoTs,
   decodeFileContent,
@@ -339,6 +340,7 @@ export {
   parseToolsLinksFromTs,
   parseBlogGuideContentFromTs,
   parseHeaderContactFromTs,
+  parseHomeCoverSignaturesFromTs,
   parseSiteInfoFromTs,
   toIsoDateTime,
 } from "@/utils/admin-service";

@@ -225,6 +225,26 @@ export function buildSiteInfoTs(info: {
   return `export type SiteInfo = {\n  title: string\n  slogan: string\n  createdAt: string\n}\n\nconst siteInfo: SiteInfo = ${JSON.stringify(info, null, 2)}\n\nexport default siteInfo\n`;
 }
 
+export function parseHomeCoverSignaturesFromTs(content: string) {
+  const matched = content.match(
+    /homeCoverSignatures:\s*string\[\]\s*=\s*(\[[\s\S]*?\])\s*;\s*\n\s*export\s+default\s+homeCoverSignatures/,
+  );
+  if (!matched?.[1]) throw new Error("无法解析首页签名列表文件");
+  const raw = matched[1]
+    .replace(/,\s*([}\]])/g, "$1")
+    .replace(/'/g, '"');
+  const parsed = JSON.parse(raw);
+  if (!Array.isArray(parsed)) throw new Error("首页签名必须是数组");
+  return parsed.map((item) => String(item).trim()).filter(Boolean);
+}
+
+export function buildHomeCoverSignaturesTs(signatures: string[]): string {
+  const lines = signatures
+    .map((s) => `  '${String(s).replace(/'/g, "\\'")}'`)
+    .join(",\n");
+  return `// 首页 Cover 打字机签名列表\nconst homeCoverSignatures: string[] = [\n${lines},\n];\n\nexport default homeCoverSignatures;\n`;
+}
+
 export function parseAboutProfileFromTs(content: string) {
   const matched = content.match(
     /const\s+aboutProfile:\s*AboutProfile\s*=\s*(\{[\s\S]*?\})\s*\n\s*export\s+default\s+aboutProfile/,

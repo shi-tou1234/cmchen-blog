@@ -19,6 +19,8 @@ import {
   buildHeaderContactTs,
   parseSiteInfoFromTs,
   buildSiteInfoTs,
+  parseHomeCoverSignaturesFromTs,
+  buildHomeCoverSignaturesTs,
 } from "./core";
 import {
   ABOUT_PERSONAL_PATH,
@@ -27,6 +29,7 @@ import {
   BLOG_GUIDE_CONTENT_PATH,
   HEADER_CONTACT_PATH,
   SITE_INFO_PATH,
+  HOME_COVER_PATH,
 } from "./constants";
 
 // ===== Data conversion helpers =====
@@ -652,6 +655,43 @@ export function initSiteSettingsHandlers() {
       setMsg(msgEl, String(error), true);
     }
   });
+
+  // 首页签名（打字机）
+  document.getElementById("load-home-cover-btn")?.addEventListener("click", async () => {
+    const msgEl = document.getElementById("home-cover-msg");
+    try {
+      const token = getToken();
+      const branch = getBranch();
+      if (!token) throw new Error("请先填写 GitHub Token");
+
+      const meta = await getFileMeta(HOME_COVER_PATH, token, branch);
+      const content = decodeFileContent(meta?.content || "");
+      const signatures = parseHomeCoverSignaturesFromTs(content);
+      const textarea = document.getElementById("home-cover-signatures") as HTMLTextAreaElement | null;
+      if (textarea) textarea.value = signatures.join("\n");
+      setMsg(msgEl, "首页签名加载成功");
+    } catch (error) {
+      setMsg(msgEl, String(error), true);
+    }
+  });
+
+  document.getElementById("save-home-cover-btn")?.addEventListener("click", async () => {
+    const msgEl = document.getElementById("home-cover-msg");
+    try {
+      const token = getToken();
+      const branch = getBranch();
+      const textarea = document.getElementById("home-cover-signatures") as HTMLTextAreaElement | null;
+      const lines = (textarea?.value || "").split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+      if (!token) throw new Error("请先填写 GitHub Token");
+      if (lines.length === 0) throw new Error("请至少填写一条签名");
+
+      const content = buildHomeCoverSignaturesTs(lines);
+      await upsertFile(HOME_COVER_PATH, content, "cover: update home signatures", token, branch);
+      setMsg(msgEl, `首页签名保存成功（${lines.length} 条）`);
+    } catch (error) {
+      setMsg(msgEl, String(error), true);
+    }
+  });
 }
 
 // 统一加载入口：触发所有设置模块的"加载"按钮，登录后自动调用
@@ -667,6 +707,7 @@ export function loadAllSiteSettings() {
     "load-header-contact-btn",
     "load-blog-guide-btn",
     "load-site-info-btn",
+    "load-home-cover-btn",
   ];
   loadButtonIds.forEach((id) => {
     document.getElementById(id)?.click();
