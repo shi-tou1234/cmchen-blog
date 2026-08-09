@@ -21,7 +21,7 @@ export const profileConfig: ProfileConfig = {
     avatar: "assets/Motues.jpg", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
     name: "shi-tou1234",
     description: "分享编程、工具和日常记录",
-    indexPage: "https://shi-tou1234.github.io/-/",
+    indexPage: "https://shi-tou1234.github.io/cmchen-blog/",
     startYear: 2026,
 }
 
