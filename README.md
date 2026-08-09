@@ -2,6 +2,16 @@
 
 一个基于 [Astro](https://astro.build) 构建的现代化静态博客站点，深受 [motues/Momo](https://github.com/motues/Momo) 启发并进行了深度功能进化。本项目专注于提供极致的阅读体验、强大的数学公式支持以及便捷的文章管理能力。
 
+## 初始化版本
+
+如果你想要一个功能齐全、内容为空的初始化模板，用来快速搭建自己的博客，可以使用 **[cmchen-blog-starter](https://github.com/shi-tou1234/cmchen-blog-starter)** —— 它是本仓库的初始化版本，已删除全部文章、关于、工具栏链接、旅行地图城市标记、音乐播放器等个人内容，只保留完整的功能与工程配置。
+
+使用方法：
+
+1. 克隆或 fork [cmchen-blog-starter](https://github.com/shi-tou1234/cmchen-blog-starter) 到你的仓库；
+2. 按该仓库 README 中「填充你的内容」章节，填入你自己的文章与个人资料；
+3. 按「部署」章节修改 `astro.config.mjs` 中的 `site` / `base` 为你的部署地址，推送后到仓库 `Settings → Pages` 将 Source 设为 GitHub Actions，即可自动构建发布。
+
 ## 功能特性
 
 ### 核心博客功能
