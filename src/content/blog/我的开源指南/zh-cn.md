@@ -1,7 +1,7 @@
 ---
 title: 我的开源指南
 pubDate: 2026-08-10T07:22:00.000Z
-updatedDate: 2026-08-10T07:24:03.061Z
+updatedDate: 2026-08-12T13:16:18.130Z
 draft: false
 description: 
 category: 随笔
@@ -89,26 +89,10 @@ Web 模式在 GitHub Pages 上直接能跑，不需要装环境。交互模式�
 * **cmchen-blog-writing**：有 PDF/PPT 要转博客文章的时候开。读文件、提取结构、输出 Markdown。
 * **cmchen-self-evolving-agent**：需要 agent 记住跨会话的信息时开。记忆体系 + 反思机制 + 控制指令。
 * **cmchen-security-scan**：审代码的时候开。本地只读扫描，不依赖云端，产出报告直接看。
-
+* **cmchen-agent-thinking-guidance**: 让任意 agent 模仿 Claude（Fable 5）的思考过程与工具调用行为规范。一个遵守流程的中等模型，胜过自由发挥的强模型——质量在结构、证据与诚实，不在模型本身。
 用的时候，把 `cmchen-skill` 仓库 clone 下来，里面每个技能都是一个独立的文件夹，复制到 Claude Code 的 `skills` 目录下，重启 Claude Code 就能在技能列表里看到。
 
 注意：这些技能包是为 Claude Code 设计的，其他 agent 框架（比如 Cursor、Windsurf、Continue）不一定能用。每个技能的 README 里有详细的触发词和用法说明，用之前建议扫一眼。cmchen-writing 和 cmchen-security-scan 有配套的自动质检脚本，长稿建议跑一遍检查硬禁令。
-
-* * *
-
-## 一些数据
-
-| 仓库  | 语言  | 创建时间 | 最新提交 |
-| --- | --- | --- | --- |
-| word | HTML | 2026-01-22 | 2026-08-08 |
-| cmchen-blog | Astro | 2026-02-16 | 2026-08-10 |
-| zhenzhibiao | Python | 2026-05-12 | 2026-08-08 |
-| jisuan | JavaScript | 2026-04-28 | 2026-08-08 |
-| yulan | JavaScript | 2026-05-16 | 2026-08-08 |
-| box | JavaScript | 2026-07-28 | 2026-08-08 |
-| cmchen-skill | Python | 2026-07-27 | 2026-08-10 |
-| links | CSS | 2026-07-30 | 2026-08-08 |
-| cmchen-blog-starter | Astro | 2026-08-09 | 2026-08-09 |
 
 这些项目里，links 和 box 可以配合着用——查到芯片再记库存。jisuan 和 zhenzhibiao 是电路课的好搭档，一个算参数一个化简逻辑。博客那一组从 starter 到写作技能包，是我写博客的完整工作流。
 
