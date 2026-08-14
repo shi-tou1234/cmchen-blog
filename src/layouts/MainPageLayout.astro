@@ -344,9 +344,13 @@ const navToolsLabel = '工具栏';
   document.addEventListener("astro:after-swap", initGlobalParticles);
 </script>
 
-<script define:vars={{ updateNotice, baseUrl }}>
+<script>
+  // 打包脚本：把 trapFocus 挂到 window，供下方 define:vars 内联脚本使用（内联脚本不能写 import）
   import { trapFocus } from "../utils/modal";
+  window.__blogTrapFocus = trapFocus;
+</script>
 
+<script define:vars={{ updateNotice, baseUrl }}>
   function getNormalizedPathname() {
     const rawPath = window.location.pathname.replace(/\/+$/, "") || "/";
     const base = (baseUrl || "/").replace(/\/+$/, "");
@@ -569,7 +573,7 @@ const navToolsLabel = '工具栏';
         openBtn.focus();
         return;
       }
-      trapFocus(modal, event);
+      window.__blogTrapFocus?.(modal, event);
     };
     document.addEventListener("keydown", handleGuideKeydown);
     window.__blogGuideKeydownHandler = handleGuideKeydown;
