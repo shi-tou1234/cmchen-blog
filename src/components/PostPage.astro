@@ -51,16 +51,17 @@ const resolvedCovers = await Promise.all(
                         description={entry.data.description}
                         image={resolved.source === 'user' ? resolved.imageUrl : ''}
                         pubDate={entry.data.pubDate}
+                        updatedDate={entry.data.updatedDate}
                         url={entry.id}
                         fallback={entry.isFallback}
                         categories={categories}
                         preview={preview}
                         readingMinutes={readingMinutes}
-                        updatedDate={entry.data.updatedDate}
                         aosDelay={index * 95}
                         externalImage={resolved.source !== 'user' ? resolved.imageUrl : ''}
                         photographer={resolved.photographer}
                         photographerUrl={resolved.photographerUrl}
+                        pinned={entry.data.pinned}
                     />
                 );
             })

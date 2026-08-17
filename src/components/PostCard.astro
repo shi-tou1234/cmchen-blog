@@ -22,6 +22,7 @@ interface Props {
     externalImage?: string;
     photographer?: string;
     photographerUrl?: string;
+    pinned?: boolean;
 }
 
 const {
@@ -39,6 +40,7 @@ const {
     externalImage = '',
     photographer = '',
     photographerUrl = '',
+    pinned = false,
 } = Astro.props;
 
 
@@ -101,12 +103,24 @@ const pageUrl = getRelativeLocaleUrl(currentLang, "/blog/" + url);
 
     {image && (
         <div class="cover post-card__cover overflow-hidden">
+            {pinned && (
+                <span class="post-card__pinned-badge">
+                    <span class="post-card__pinned-dot"></span>
+                    置顶
+                </span>
+            )}
             <ImageModule src={image} alt={title} class="post-card__image"/>
         </div>
     )}
 
     {!image && externalImage && (
         <div class="cover post-card__cover overflow-hidden">
+            {pinned && (
+                <span class="post-card__pinned-badge">
+                    <span class="post-card__pinned-dot"></span>
+                    置顶
+                </span>
+            )}
             <ImageModule src={externalImage} alt={title} class="post-card__image"/>
             {photographer && (
                 photographerUrl ? (
@@ -351,6 +365,46 @@ const pageUrl = getRelativeLocaleUrl(currentLang, "/blog/" + url);
         transform: translateY(-2px);
         filter: saturate(1.1);
         box-shadow: 0 8px 16px color-mix(in srgb, var(--post-tag-border) 58%, transparent);
+    }
+
+    .post-card__pinned-badge {
+        position: absolute;
+        top: 0.75rem;
+        left: 0.75rem;
+        z-index: 30;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        padding: 0.3rem 0.65rem;
+        border-radius: 999px;
+        background: rgba(0, 0, 0, 0.42);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        color: rgba(255, 255, 255, 0.92);
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        pointer-events: none;
+    }
+
+    .post-card__pinned-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #d4a054;
+        box-shadow: 0 0 6px rgba(212, 160, 84, 0.6);
+        animation: post-card-pin-pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes post-card-pin-pulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.55; transform: scale(0.82); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .post-card__pinned-dot {
+            animation: none !important;
+        }
     }
 
     .post-card__photo-credit {
