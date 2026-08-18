@@ -540,4 +540,13 @@ const showUpdatedDate = entry.data.updatedDate && entry.data.updatedDate.valueOf
             max-width: 100%;
         }
     }
+
+    /* 移动端：收拢式浮动按钮（MobileFab）替代原浮动按钮簇，目录面板与遮罩保留供 FAB 编程式调用 */
+    @media (max-width: 767px) {
+        .post-right-sidebar .post-back-floating,
+        .post-right-sidebar #backTop,
+        .post-right-sidebar .post-toc-fab {
+            display: none;
+        }
+    }
 </style>

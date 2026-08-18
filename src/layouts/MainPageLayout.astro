@@ -4,6 +4,7 @@ import Header from '@components/Header.astro';
 import Footer from '@components/Footer.astro';
 import Search from '@components/misc/Search.astro';
 import KeyboardShortcuts from '@components/control/KeyboardShortcuts.astro';
+import MobileFab from '@components/control/MobileFab.astro';
 import blogGuideContent from '@/data/blog-guide-content';
 import { getRelativeLocaleUrl } from '@utils/url-utils';
 
@@ -116,6 +117,9 @@ const navToolsLabel = '工具栏';
         <span class="mobile-bottom-nav__label">{navToolsLabel}</span>
       </a>
     </nav>
+
+    <!-- 移动端收拢式浮动按钮（替代顶栏汉堡与文章页浮动按钮簇） -->
+    <MobileFab />
 
     <Footer />
     <Search />
