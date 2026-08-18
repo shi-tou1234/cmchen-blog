@@ -326,7 +326,8 @@ const aboutPersonal: AboutPersonal = {
         "新增脚注引用与文末定义列表渲染",
         "更新 DOMPurify 白名单，放行相关标签与类名",
         "补齐新增样式并适配暗色主题，提示框配色取自 variables.css",
-        "文学引用由 > 语法替换为 :::quote 语法"
+        "文学引用由 > 语法替换为 :::quote 语法",
+        "增大后台编辑窗口大小"
       ]
     }
   ],
