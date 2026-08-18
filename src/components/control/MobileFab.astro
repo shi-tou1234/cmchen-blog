@@ -92,11 +92,12 @@ function initMobileFab() {
       const panel = document.getElementById('post-toc-panel');
       const backdrop = document.getElementById('post-toc-backdrop');
       const tocFab = document.getElementById('post-toc-fab');
-      if (!(panel instanceof HTMLElement) || !(backdrop instanceof HTMLElement)) return;
-      const open = !panel.classList.contains('is-open');
-      panel.classList.toggle('is-open', open);
-      backdrop.classList.toggle('is-open', open);
-      tocFab?.setAttribute('aria-expanded', String(open));
+      if (panel instanceof HTMLElement && backdrop instanceof HTMLElement) {
+        const open = !panel.classList.contains('is-open');
+        panel.classList.toggle('is-open', open);
+        backdrop.classList.toggle('is-open', open);
+        tocFab?.setAttribute('aria-expanded', String(open));
+      }
     } else if (action === 'back') {
       document.getElementById('post-back-button')?.click();
     } else if (action === 'comment') {
