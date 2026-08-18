@@ -63,7 +63,10 @@ function initMobileFab() {
     setVisible('back', Boolean(document.getElementById('post-back-button')));
     setVisible('comment', Boolean(document.getElementById('post-comment-button')));
   };
+  // 延迟检查，确保 PostToc 组件已初始化完成
   refreshItems();
+  setTimeout(refreshItems, 100);
+  setTimeout(refreshItems, 500);
 
   const setOpen = (open) => {
     if (open) refreshItems();
