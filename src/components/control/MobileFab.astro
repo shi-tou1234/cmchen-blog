@@ -34,11 +34,8 @@
       <circle class="mobile-fab-ring__track" cx="24" cy="24" r="20" fill="none" stroke-width="2"></circle>
       <circle id="mobile-fab-progress" cx="24" cy="24" r="20" fill="none" stroke-width="2" stroke-dasharray="0 125.7" stroke-linecap="round"></circle>
     </svg>
-    <svg class="mobile-fab-icon mobile-fab-icon--dots" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <circle cx="12" cy="5" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="12" cy="19" r="1.8"/>
-    </svg>
-    <svg class="mobile-fab-icon mobile-fab-icon--close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
-      <path d="M6 6l12 12M18 6L6 18"/>
+    <svg class="mobile-fab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+      <path d="M12 5v14M5 12h14"/>
     </svg>
   </button>
 </div>
@@ -202,23 +199,12 @@ if (document.readyState === 'loading') {
     z-index: 1;
     width: 1.05rem;
     height: 1.05rem;
-    transition: opacity 0.25s ease, transform 0.25s ease;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
-  .mobile-fab-icon--close {
-    position: absolute;
-    opacity: 0;
-    transform: rotate(-90deg);
-  }
-
-  #mobile-fab.is-active .mobile-fab-icon--dots {
-    opacity: 0;
-    transform: rotate(90deg);
-  }
-
-  #mobile-fab.is-active .mobile-fab-icon--close {
-    opacity: 1;
-    transform: rotate(0deg);
+  /* 展开时加号旋转成 × */
+  #mobile-fab.is-active .mobile-fab-icon {
+    transform: rotate(135deg);
   }
 
   .mobile-fab-items {

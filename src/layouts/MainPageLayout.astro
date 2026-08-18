@@ -773,6 +773,13 @@ html.post-reading-fullscreen .mobile-bottom-nav {
   box-shadow: 0 2px 10px var(--shadow-color);
 }
 
+/* 移动端由收拢式浮动按钮（MobileFab）提供回顶，避免重复显示 */
+@media (max-width: 767px) {
+  #backtop-global {
+    display: none !important;
+  }
+}
+
 #progress-circle-global {
   stroke: var(--text-color);
 }
