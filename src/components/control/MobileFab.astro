@@ -38,6 +38,14 @@
       <path d="M12 5v14M5 12h14"/>
     </svg>
   </button>
+
+  <div id="mobile-fab-toc" class="mobile-fab-toc" aria-label="文章目录">
+    <div class="mobile-fab-toc__head">
+      <span class="mobile-fab-toc__title">目录</span>
+      <button id="mobile-fab-toc-close" type="button" class="mobile-fab-toc__close" aria-label="关闭目录">&times;</button>
+    </div>
+    <ol id="mobile-fab-toc-list" class="mobile-fab-toc__list"></ol>
+  </div>
 </div>
 
 <script>
@@ -46,14 +54,57 @@ function initMobileFab() {
   const trigger = document.getElementById('mobile-fab-trigger');
   if (!(fab instanceof HTMLElement) || !(trigger instanceof HTMLButtonElement)) return;
 
+  // 同一页面重复初始化时跳过，避免 fab click 监听器累积导致目录点击后被立即反向关闭
+  if (fab.dataset.mobileFabBound === 'true') return;
+  fab.dataset.mobileFabBound = 'true';
+
   // 博文页才有的条目：按页面内实际元素决定是否显示
   const setVisible = (action, visible) => {
     const item = fab.querySelector(`[data-fab-action="${action}"]`);
     if (item instanceof HTMLElement) item.hidden = !visible;
   };
-  setVisible('toc', Boolean(document.getElementById('post-toc-fab')));
+
+  // 目录：直接读取文章内的 h2/h3 标题，构建 MobileFab 自有的目录面板
+  const tocPanel = document.getElementById('mobile-fab-toc');
+  const tocList = document.getElementById('mobile-fab-toc-list');
+  const tocClose = document.getElementById('mobile-fab-toc-close');
+  let tocHeadings = [];
+
+  const buildToc = () => {
+    const markdown = document.querySelector('.markdown-content');
+    if (!(markdown instanceof HTMLElement) || !(tocList instanceof HTMLElement)) return [];
+    const headings = Array.from(markdown.querySelectorAll('h2, h3')).filter((h) => (h.textContent || '').trim());
+    tocList.innerHTML = '';
+    headings.forEach((heading, index) => {
+      const li = document.createElement('li');
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = `mobile-fab-toc__item mobile-fab-toc__item--${heading.tagName === 'H3' ? 'sub' : 'main'}`;
+      btn.textContent = (heading.textContent || '').trim();
+      btn.addEventListener('click', () => {
+        heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTocOpen(false);
+        setOpen(false);
+      });
+      li.appendChild(btn);
+      tocList.appendChild(li);
+    });
+    return headings;
+  };
+
+  const setTocOpen = (open) => {
+    if (!(tocPanel instanceof HTMLElement)) return;
+    tocPanel.classList.toggle('is-open', open);
+  };
+
+  tocHeadings = buildToc();
+  setVisible('toc', tocHeadings.length > 0);
   setVisible('back', Boolean(document.getElementById('post-back-button')));
   setVisible('comment', Boolean(document.getElementById('post-comment-button')));
+
+  if (tocClose instanceof HTMLButtonElement) {
+    tocClose.addEventListener('click', () => setTocOpen(false));
+  }
 
   const setOpen = (open) => {
     fab.classList.toggle('is-active', open);
@@ -63,6 +114,7 @@ function initMobileFab() {
 
   trigger.onclick = (event) => {
     event.stopPropagation();
+    setTocOpen(false);
     setOpen(!fab.classList.contains('is-active'));
   };
 
@@ -76,7 +128,13 @@ function initMobileFab() {
       // 复用 MobileMenu 已有的开合逻辑（按钮被 FAB 替代，但保留在 DOM 中）
       document.getElementById('mobile-menu-button')?.click();
     } else if (action === 'toc') {
-      document.getElementById('post-toc-fab')?.click();
+      // 切换 MobileFab 自有的目录面板（不再依赖 PostToc 的隐藏按钮）
+      if (tocPanel instanceof HTMLElement) {
+        const willOpen = !tocPanel.classList.contains('is-open');
+        setTocOpen(willOpen);
+        if (willOpen) setOpen(false);
+      }
+      return;
     } else if (action === 'back') {
       document.getElementById('post-back-button')?.click();
     } else if (action === 'comment') {
@@ -92,6 +150,7 @@ function initMobileFab() {
   if (oldDocClick) document.removeEventListener('click', oldDocClick);
   const handleDocClick = (event) => {
     if (!fab.contains(event.target)) setOpen(false);
+    if (tocPanel instanceof HTMLElement && !tocPanel.contains(event.target)) setTocOpen(false);
   };
   document.addEventListener('click', handleDocClick);
   window.__mobileFabDocClickHandler = handleDocClick;
@@ -99,7 +158,10 @@ function initMobileFab() {
   const oldKeydown = window.__mobileFabKeydownHandler;
   if (oldKeydown) document.removeEventListener('keydown', oldKeydown);
   const handleKeydown = (event) => {
-    if (event.key === 'Escape') setOpen(false);
+    if (event.key === 'Escape') {
+      setOpen(false);
+      setTocOpen(false);
+    }
   };
   document.addEventListener('keydown', handleKeydown);
   window.__mobileFabKeydownHandler = handleKeydown;
@@ -277,6 +339,102 @@ if (document.readyState === 'loading') {
     #mobile-fab-trigger {
       transition: none;
     }
+  }
+
+  /* ===== MobileFab 自有目录面板 ===== */
+  .mobile-fab-toc {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    width: min(78vw, 300px);
+    max-height: 55vh;
+    max-height: 55dvh;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.75rem;
+    border: 1px solid var(--border-color);
+    background: color-mix(in srgb, var(--bg-color) 96%, transparent);
+    box-shadow: 0 8px 24px var(--shadow-color);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-0.4rem) scale(0.96);
+    transform-origin: top right;
+    pointer-events: none;
+    transition: opacity 0.22s ease, transform 0.22s ease;
+  }
+
+  .mobile-fab-toc.is-open {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  .mobile-fab-toc__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .mobile-fab-toc__title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-color);
+  }
+
+  .mobile-fab-toc__close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-color);
+    background: transparent;
+    color: var(--text-color);
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mobile-fab-toc__list {
+    list-style: none;
+    margin: 0;
+    padding: 0.4rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .mobile-fab-toc__item {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 0.45rem 0.6rem;
+    border: none;
+    border-radius: 0.5rem;
+    background: transparent;
+    color: var(--text-color);
+    font-size: 0.82rem;
+    line-height: 1.4;
+    cursor: pointer;
+    transition: background 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mobile-fab-toc__item:hover,
+  .mobile-fab-toc__item:active {
+    background: var(--hover-bg-color);
+  }
+
+  .mobile-fab-toc__item--sub {
+    padding-left: 1.4rem;
+    font-size: 0.78rem;
+    color: color-mix(in srgb, var(--text-color) 78%, transparent);
   }
 </style>
 
