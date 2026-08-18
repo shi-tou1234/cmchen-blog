@@ -59,11 +59,10 @@ function initMobileFab() {
       && Boolean(document.getElementById('post-toc-panel'));
   };
   const refreshItems = () => {
-    setVisible('toc', isTocUsable());
+    // 目录按钮始终可见，点击时再检查是否可用（避免初始化时序问题导致按钮被隐藏）
     setVisible('back', Boolean(document.getElementById('post-back-button')));
     setVisible('comment', Boolean(document.getElementById('post-comment-button')));
   };
-  // 延迟检查，确保 PostToc 组件已初始化完成
   refreshItems();
   setTimeout(refreshItems, 100);
   setTimeout(refreshItems, 500);
@@ -90,16 +89,22 @@ function initMobileFab() {
       // 复用 MobileMenu 已有的开合逻辑（按钮被 FAB 替代，但保留在 DOM 中）
       document.getElementById('mobile-menu-button')?.click();
     } else if (action === 'toc') {
-      // 直接切换目录面板状态：原 #post-toc-fab 在移动端已被隐藏，
-      // 对其合成点击在部分情况下无法触发面板，这里改为等效的状态切换
-      const panel = document.getElementById('post-toc-panel');
-      const backdrop = document.getElementById('post-toc-backdrop');
-      const tocFab = document.getElementById('post-toc-fab');
-      if (!(panel instanceof HTMLElement) || !(backdrop instanceof HTMLElement)) return;
-      const open = !panel.classList.contains('is-open');
-      panel.classList.toggle('is-open', open);
-      backdrop.classList.toggle('is-open', open);
-      tocFab?.setAttribute('aria-expanded', String(open));
+      // 直接切换目录面板状态
+      const openTocPanel = () => {
+        const panel = document.getElementById('post-toc-panel');
+        const backdrop = document.getElementById('post-toc-backdrop');
+        const tocFab = document.getElementById('post-toc-fab');
+        if (!(panel instanceof HTMLElement) || !(backdrop instanceof HTMLElement)) {
+          // PostToc 还没初始化完成，延迟重试
+          setTimeout(openTocPanel, 200);
+          return;
+        }
+        const open = !panel.classList.contains('is-open');
+        panel.classList.toggle('is-open', open);
+        backdrop.classList.toggle('is-open', open);
+        tocFab?.setAttribute('aria-expanded', String(open));
+      };
+      openTocPanel();
     } else if (action === 'back') {
       document.getElementById('post-back-button')?.click();
     } else if (action === 'comment') {
