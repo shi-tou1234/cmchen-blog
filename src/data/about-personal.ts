@@ -329,6 +329,17 @@ const aboutPersonal: AboutPersonal = {
         "文学引用由 > 语法替换为 :::quote 语法",
         "增大后台编辑窗口大小"
       ]
+    },
+    {
+      "date": "2026.8.19",
+      "content": [
+        "归档页筛选文案统一为「归档」",
+        "新增 RSS 订阅，页脚与 Layout head 均已接入",
+        "文章页新增复制链接分享按钮",
+        "页面接入 Open Graph / Twitter Card 分享卡片预览",
+        "Giscus 评论区增加加载中与加载失败提示，支持一键重试",
+        "搜索无结果时增加引导文案与「浏览全部归档」入口"
+      ]
     }
   ],
   "musicTracks": [
