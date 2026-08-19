@@ -1,7 +1,7 @@
 ---
 title: AI工具
 pubDate: 2026-02-21T06:08:00.000Z
-updatedDate: 2026-08-17T11:13:51.065Z
+updatedDate: 2026-08-19T08:01:12.781Z
 draft: false
 pinned: true
 description: 
@@ -26,6 +26,7 @@ slugId: ai工具
 [deepseek](https://chat.deepseek.com/)
 
 最新旗舰：deepseek v4 pro max
+
 flash速度很快，能力不输给pro，同时代码,agent,世界知识能力大幅度提升，数学推理能力没得说，支持 1M 上下文，思考和生成速度有了很大的提升。但是你涨价了，用不起了......
 
 dsh开发的不错，你先别管它上手难度大不大，你就说够不够diy吧
@@ -33,6 +34,7 @@ dsh开发的不错，你先别管它上手难度大不大，你就说够不够di
 [GLM](https://chat.z.ai/)
 
 最新旗舰：GLM 5.3
+
 后训练的神，修bug能力非常强，和5.2一样的架构，但是能力提升很大，上下文也是1M了，可惜不是多模态，体验非常不错，现在成为了我兜底大模型。
 
 [Minimax](https://agent.minimaxi.com/)
@@ -44,6 +46,7 @@ dsh开发的不错，你先别管它上手难度大不大，你就说够不够di
 [Kimi](https://www.kimi.com/)
 
 最新旗舰：kimi k3
+
 神！前端的审美简直了，将近3t的参数量，给gpt 和claude给予重击，识图，agent 集群。有个严重的问题就是官网的算力不足，对免费用户非常不友好。然后就是价格，也太贵了.....
 
 [豆包](https://www.doubao.com/chat/)
@@ -54,19 +57,25 @@ dsh开发的不错，你先别管它上手难度大不大，你就说够不够di
 [xiaomi mimo studio](https://aistudio.xiaomimimo.com/#/c)
 
 最新旗舰：xiaomi mimo v2.5 pro
+
 小米自研的大模型，跑分真不真实不知道，自从v2.5出来以后有了明显的进步，但是相对应的，价格也上去了，但是你这个缓存命中率认真的吗？自从ds涨价之后，目前成为了我go会员中的香饽饽，对不起mimo，之前是我说话太大声了，虽然你已经好几个月没有更新了，落后了很多家的旗舰，但是你便宜啊，而且是多模态
 
 [stepfun](https://studio.stepfun.com/)
 
+旗舰模型 stepfun 3.7 flash
+
 265k的上下文，模型能力一般，比较笨，但是它的token plan确实量大管饱，就是不太适合agent，上下文太短了，多模态
 
 [longcat](https://longcat.chat/)
+
+旗舰模型longcat 2.0
 
 1M上下文，国产卡训练，但是能力非常一般，纯文本
 
 [GPT](https://chatgpt.com/)
 
 最新旗舰：GPT 5.6 sol
+
 需要梯子，写文章水平很高，推理能力很强，后端和程序改错能力很强，免费用户额度有限。，免费版给了5.6luna，目前性价比最高的会员，自从某A不干人事之后，我从来没有如此期待5.6的发布，非常好用，可以基本取代fable 5，
 
 [Gemini](https://gemini.google.com/app)
