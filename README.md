@@ -92,6 +92,21 @@ src/
 └── utils/            # 工具函数（含后台 admin/ 逻辑）
 ```
 
+## 桌面版（Electron）
+
+支持将博客打包为 Windows 桌面 exe，双击离线阅读全站，中文搜索可用。
+
+```bash
+pnpm run dist:electron    # 一键打包：桌面形态构建 + 精简 electron 应用
+```
+
+产物输出到 `release/`：
+
+- `cmchen-blog-desktop 0.0.1.exe`：portable 便携版，双击即用
+- `cmchen-blog-desktop Setup 0.0.1.exe`：NSIS 安装版
+
+实现要点：桌面壳基于 [Electron](https://www.electronjs.org/)，内置 `serve-handler` 在 127.0.0.1 随机端口托管构建产物（Pagefind 搜索依赖 http 源，`file://` 下不可用）；采用 staging 精简打包策略，运行时仅携带 serve-handler 依赖闭包（12 个包），exe 约 147MB。调试时先 `pnpm run build:desktop` 再 `pnpm exec electron .`。
+
 ## 部署
 
 仓库内置 GitHub Actions 工作流（`.github/workflows/deploy.yml`）：推送到 `main` 后自动构建并发布到 GitHub Pages。构建包含两步：`astro build` 与 `pagefind` 索引生成。注意 `astro.config.mjs` 中 `site` 与 `base` 需与实际的 Pages 地址一致。
