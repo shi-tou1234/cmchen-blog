@@ -94,7 +94,7 @@ src/
 
 ## 桌面版（Electron）
 
-支持将博客打包为 Windows 桌面 exe，双击离线阅读全站，中文搜索可用。
+支持将博客打包为 Windows 桌面 exe：**优先在线加载 GitHub Pages 线上站点（新文章即时可见，无需重新打包），断网或站点不可达时自动回落到打包时内置的离线快照**，中文搜索两种模式下均可用。
 
 ```bash
 pnpm run dist:electron    # 一键打包：桌面形态构建 + 精简 electron 应用
@@ -105,7 +105,7 @@ pnpm run dist:electron    # 一键打包：桌面形态构建 + 精简 electron 
 - `cmchen-blog-desktop 0.0.1.exe`：portable 便携版，双击即用
 - `cmchen-blog-desktop Setup 0.0.1.exe`：NSIS 安装版
 
-实现要点：桌面壳基于 [Electron](https://www.electronjs.org/)，内置 `serve-handler` 在 127.0.0.1 随机端口托管构建产物（Pagefind 搜索依赖 http 源，`file://` 下不可用）；采用 staging 精简打包策略，运行时仅携带 serve-handler 依赖闭包（12 个包），exe 约 147MB。调试时先 `pnpm run build:desktop` 再 `pnpm exec electron .`。
+实现要点：桌面壳基于 [Electron](https://www.electronjs.org/)，启动时探测线上站点（HEAD + 5 秒超时），可达即加载线上；不可达则用内置 `serve-handler` 在 127.0.0.1 随机端口托管打包时的离线快照（Pagefind 搜索依赖 http 源，两种模式均已处理）；线上地址可用环境变量 `DESKTOP_ONLINE_URL` 覆盖；staging 精简打包仅携带 serve-handler 依赖闭包（12 个包），exe 约 147MB。调试时先 `pnpm run build:desktop` 再 `pnpm exec electron .`。只有想让「离线快照」更新时才需要重新打包。
 
 ## 部署
 
