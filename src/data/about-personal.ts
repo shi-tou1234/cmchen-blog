@@ -340,6 +340,15 @@ const aboutPersonal: AboutPersonal = {
         "Giscus 评论区增加加载中与加载失败提示，支持一键重试",
         "搜索无结果时增加引导文案与「浏览全部归档」入口"
       ]
+    },
+    {
+      "date": "2026.8.23",
+      "content": [
+        "安全：登录态改为密码派生凭据、登录失败限速锁定，GitHub API 端点 https 白名单+首次确认、读缓存路径越界校验，哈希强度自动提示升级与细粒度 Token 建议",
+        "性能：新增 script/optimize-images.js 图片批量转 WebP（源图 -335MB，dist 488MB→111MB），tsparticles/echarts 按需动态加载、Pagefind 首次搜索时加载",
+        "修复：搜索永久失效、空指令炸构建、newpost 空格 YAML、Giscus 主题脱节，搜索防抖跨页污染、隐私模式报错、Windows 封面路径、spoiler/热力图监听泄漏等 12 处",
+        "工程化：ESLint 接入 typescript-eslint（88 个 lint 错误清零，astro check 类型错误 356 清零、新增 onPageScoped 统一生命周期清理"
+      ]
     }
   ],
   "musicTracks": [
