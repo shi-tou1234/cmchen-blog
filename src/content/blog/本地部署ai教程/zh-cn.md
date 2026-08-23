@@ -3,7 +3,7 @@ title: 本地部署ai教程
 pubDate: 2026-03-07T13:38:00.000Z
 draft: false
 description: 
-image: ./assets/屏幕截图-2026-03-07-214609.png
+image: ./assets/屏幕截图-2026-03-07-214609.webp
 category: 工具使用
 slugId: 本地部署ai教程
 ---
@@ -14,11 +14,11 @@ slugId: 本地部署ai教程
 
 首先要依据自己的电脑系统来下载不同版本的ollama[跳转下载链接](https://ollama.com/download/)。
 
-![屏幕截图-2026-03-07-214609.png](./assets/屏幕截图-2026-03-07-214609.png)
+![屏幕截图-2026-03-07-214609.webp](./assets/屏幕截图-2026-03-07-214609.webp)
 
 默认会装在c盘，到时候安装完成之后在任务栏右键打开设置里面可以更改安装位置
 
-![1.png](./assets/1.png)
+![1.webp](./assets/1.webp)
 
 然后就可以在ollama官网的[模型选取](https://ollama.com/search)当中安装自己的想用的模型啦，不过需要注意自己的显卡可不可以承载这个模型，下面我们使用qwen模型部署来举个例子：
 
@@ -28,7 +28,7 @@ slugId: 本地部署ai教程
 
 复制CLI下面的这行命令，在自己电脑上打开cmd（电脑搜索），复制这行命令，等待安装完成。
 
-![1.png](./assets/1.png)
+![1.webp](./assets/1.webp)
 
 显示这个界面就完成部署啦。下次重启电脑之后可以直接在ollama中找到自己的模型或者在cmd中输入刚才复制的命令就可以使用啦！
 

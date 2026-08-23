@@ -7,19 +7,19 @@ category: 高数
 slugId: 定积分
 ---
 
-![定积分-p01.png](./assets/定积分-p01.png)
+![定积分-p01.webp](./assets/定积分-p01.webp)
 
-![定积分-p02.png](./assets/定积分-p02.png)
+![定积分-p02.webp](./assets/定积分-p02.webp)
 
-![定积分-p03.png](./assets/定积分-p03.png)
+![定积分-p03.webp](./assets/定积分-p03.webp)
 
-![定积分-p04.png](./assets/定积分-p04.png)
+![定积分-p04.webp](./assets/定积分-p04.webp)
 
 ![定积分-p05.png](./assets/定积分-p05.png)
 
-![定积分-p06.png](./assets/定积分-p06.png)
+![定积分-p06.webp](./assets/定积分-p06.webp)
 
-![定积分-p07.png](./assets/定积分-p07.png)
+![定积分-p07.webp](./assets/定积分-p07.webp)
 
 ## 关键定理与公式推导
 

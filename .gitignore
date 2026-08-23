@@ -30,3 +30,4 @@ pnpm-debug.log*
 
 # TRAE IDE 临时文件
 .trae/
+.mimosa/

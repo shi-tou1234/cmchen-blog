@@ -10,17 +10,17 @@ slugId: 不定积分
 
 
 
-![](./assets/不定积分-p01.png)
+![](./assets/不定积分-p01.webp)
 
-![](./assets/不定积分-p02.png)
+![](./assets/不定积分-p02.webp)
 
-![](./assets/不定积分-p03.png)
+![](./assets/不定积分-p03.webp)
 
-![](./assets/不定积分-p04.png)
+![](./assets/不定积分-p04.webp)
 
-![](./assets/不定积分-p05.png)
+![](./assets/不定积分-p05.webp)
 
-![](./assets/不定积分-p06.png)
+![](./assets/不定积分-p06.webp)
 
 ![](./assets/不定积分-p07.png)
 

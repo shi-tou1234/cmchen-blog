@@ -7,15 +7,15 @@ category: 高数
 slugId: 导数和微分
 ---
 
-![导数和微分-p01.png](./assets/导数和微分-p01.png)
+![导数和微分-p01.webp](./assets/导数和微分-p01.webp)
 
-![导数和微分-p02.png](./assets/导数和微分-p02.png)
+![导数和微分-p02.webp](./assets/导数和微分-p02.webp)
 
-![导数和微分-p03.png](./assets/导数和微分-p03.png)
+![导数和微分-p03.webp](./assets/导数和微分-p03.webp)
 
-![导数和微分-p04.png](./assets/导数和微分-p04.png)
+![导数和微分-p04.webp](./assets/导数和微分-p04.webp)
 
-![导数和微分-p05.png](./assets/导数和微分-p05.png)
+![导数和微分-p05.webp](./assets/导数和微分-p05.webp)
 
 ## 关键定理与公式推导
 

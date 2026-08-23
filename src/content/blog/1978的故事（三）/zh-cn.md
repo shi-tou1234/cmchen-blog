@@ -282,5 +282,5 @@ slugId: 1978的故事（三）
 <br><right>—— 林俊杰《交换余生》</right>
 :::
 
-![](./assets/c54df75405e149fef9f7f1788dd19c31.jpg)
+![](./assets/c54df75405e149fef9f7f1788dd19c31.webp)
 

@@ -3,7 +3,7 @@ title: IDE
 pubDate: 2026-02-20T05:42:00.000Z
 draft: false
 description: 
-image: ./assets/新对话.png
+image: ./assets/新对话.webp
 category: 工具使用
 slugId: ide
 ---
@@ -26,6 +26,6 @@ VScode:非常强大的编码功能，微软生态互联非常方便，唯一的�
 
 Clion:本人在用的IDE,环境配置比vscode简单很多，推荐！
 
-![1.png](./assets/1.png)
+![1.webp](./assets/1.webp)
 
 本次推荐没有包含ai IDE,这个请见下一篇博客。
