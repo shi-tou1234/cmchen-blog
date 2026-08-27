@@ -1,7 +1,7 @@
 ---
 title: AI工具
 pubDate: 2026-02-21T06:08:00.000Z
-updatedDate: 2026-08-27T08:52:01.386Z
+updatedDate: 2026-08-27T09:12:46.103Z
 draft: false
 pinned: true
 description: 
@@ -29,7 +29,7 @@ slugId: ai工具
 
 在其他大模型疯狂卷 Coding 和 Agent 的时候，3.8 Max 的写作水平竟然还提升了，属实是全面发展。建议下载 **Qwen Studio** 而不是直接用千问网页版。国内使用免费，就是一贯的阿里风格——UI 真的很丑。建议使用国外站体验更好。目前已经成为我手机端最常用的大模型。
 :::tip
-推荐搭配 [Qwen Studio](https://qwen.studio/) 桌面客户端，体验比网页版好很多。日常写作、识图、代码生成都OK，属于「啥都能干」的全能型选手。
+推荐搭配 [Qwen Studio](https://qwen.ai) 桌面客户端，体验比网页版好很多。日常写作、识图、代码生成都OK，属于「啥都能干」的全能型选手。
 :::
 
 * * *
