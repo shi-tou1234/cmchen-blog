@@ -349,6 +349,12 @@ const aboutPersonal: AboutPersonal = {
         "修复：搜索永久失效、空指令炸构建、newpost 空格 YAML、Giscus 主题脱节，搜索防抖跨页污染、隐私模式报错、Windows 封面路径、spoiler/热力图监听泄漏等 12 处",
         "工程化：ESLint 接入 typescript-eslint（88 个 lint 错误清零，astro check 类型错误 356 清零、新增 onPageScoped 统一生命周期清理"
       ]
+    },
+    {
+      "date": "2026.8.27",
+      "content": [
+        "后台工具栏补齐全部自定义语法快速插入（5 类提示框+任务列表）"
+      ]
     }
   ],
   "musicTracks": [
