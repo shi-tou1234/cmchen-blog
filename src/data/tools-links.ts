@@ -9,7 +9,7 @@ export interface ToolLink {
 const toolsLinks: ToolLink[] = [
   {
     "name": "数据处理工具",
-    "url": "https://shi-tou1234.github.io/study-platform/",
+    "url": "https://shi-tou1234.github.io/cmchen-study-platform/",
     "icon": "fa6-solid:calculator",
     "description": "多功能在线计算工具，便捷实用",
     "color": "linear-gradient(-45deg, hsl(165, 25%, 55%) 0%, hsl(195, 22%, 55%) 100%)"
