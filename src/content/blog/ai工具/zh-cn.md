@@ -1,7 +1,7 @@
 ---
 title: AI工具
 pubDate: 2026-02-21T06:08:00.000Z
-updatedDate: 2026-08-27T09:12:46.103Z
+updatedDate: 2026-09-03T13:14:54.697Z
 draft: false
 pinned: true
 description: 
@@ -54,7 +54,7 @@ slugId: ai工具
 
 **最新旗舰：** DeepSeek V4 Pro Max**最新模型：** DeepSeek-V4-Flash-Vision-Exp（参数量和 V4 Flash 一致，多模态）
 
-Flash 速度很快，能力不输给 Pro，同时代码、Agent、世界知识能力大幅度提升，数学推理能力没得说，支持 1M 上下文，思考和生成速度有了很大的提升。但是……你涨价了，用不起了……
+Flash 速度很快，能力不输给 Pro，同时代码、Agent、世界知识能力大幅度提升，数学推理能力没得说，支持 1M 上下文，思考和生成速度有了很大的提升。但是……你涨价了，用不起了……而且pro似乎存在过拟合的问题
 
 DSH（DeepSeek 社区版）开发的不错，你先别管它上手难度大不大，你就说够不够 DIY 吧。
 
@@ -144,9 +144,9 @@ DSH（DeepSeek 社区版）开发的不错，你先别管它上手难度大不�
 
 * [官网](https://aistudio.tencent.com/)
 
-**旗舰模型：** Hunyuan 3（Hy3）
+**旗舰模型：** Hunyuan 4 pre
 
-295B 总参数、21B 激活参数架构，256K 上下文，纯文本。
+1M 上下文，纯文本。
 
 **社区评价：** 「参数大但激活参数少，推理效率还行」「腾讯生态集成好，但通用能力一般」「适合企业级应用，个人用有点重」。
 
@@ -174,9 +174,9 @@ DSH（DeepSeek 社区版）开发的不错，你先别管它上手难度大不�
 
 * [官网](https://claude.com/)
 
-**最新旗舰：** Claude Opus 5、Sonnet 5**新模型：** Claude Fable 5
+**最新旗舰： Claude Fable 5.1
 
-需要梯子。不当人的公司，把我的账号给封了，没有任何解释。Opus 5 确实好用，Sonnet 5 也是当前最强梯队，但你现在只支持 API 调用了，这个价格一般人根本用不起。Fable 5 作为最新发布的模型，能力进一步提升，但同样面临价格劝退。同时 Claude Code 还被曝出隐私泄露问题，你 tm……
+需要梯子。不当人的公司，把我的账号给封了，没有任何解释。Fable 5.1 作为最新发布的模型，能力进一步提升，虽然价格相较于fable 5降低了一点，但同样面临价格劝退。同时 Claude Code 还被曝出隐私泄露问题，你 tm……
 
 **社区评价：** 编程和长文本处理是强项，但封号问题和价格劝退很多人。社区评价：「能力很强，但 Anthropic 的运营策略让我不敢用」「Claude Code 真好用，就是太贵」。
 
@@ -187,9 +187,9 @@ DSH（DeepSeek 社区版）开发的不错，你先别管它上手难度大不�
 * [官网](https://gemini.google.com/app)
 * [替代入口](https://aistudio.google.com/prompts/new_chat)
 
-**最新旗舰：** Gemini 3.1 Pro**最新模型：** Gemini 3.7 Flash
+**最新旗舰：** Gemini 3.1 Pro**最新模型：** Gemini 3.8 Flash
 
-需要梯子。多模态能力非常强，拥有非常好的前端审美，就是写后端能力不行。注册需要谷歌邮箱（国外软件通信证）。Pro 依旧难产，Google 你在干什么，目前 3.7 没有对免费用户开放，等着吧。
+需要梯子。多模态能力非常强，拥有非常好的前端审美，就是写后端能力不行。注册需要谷歌邮箱（国外软件通信证）。Pro 依旧难产，Google 你在干什么....
 
 如果因为地区原因无法使用，建议转到 [Google AI Studio](https://aistudio.google.com/prompts/new_chat)。
 
