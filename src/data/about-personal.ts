@@ -355,6 +355,12 @@ const aboutPersonal: AboutPersonal = {
       "content": [
         "后台工具栏补齐全部自定义语法快速插入（5 类提示框+任务列表）"
       ]
+    },
+    {
+      "date": "2026.9.4",
+      "content": [
+        "移动端切换深浅主题改为颜色过渡，文字全程可见，修复切换瞬间只剩纯色的闪烁"
+      ]
     }
   ],
   "musicTracks": [
