@@ -7,6 +7,7 @@ import FontSizeControl from "./control/FontSizeControl.astro"
 import headerContact from "@/data/header-contact"
 import siteInfo from "@/data/site-info"
 import HeaderLogoFracture from "./header/HeaderLogoFracture.astro"
+import HeaderLogoScrollHide from "./header/HeaderLogoScrollHide.astro"
 import MobileMenu from "./header/MobileMenu.astro"
 import CopyEmail from "./header/CopyEmail.astro"
 import RunningDays from "./header/RunningDays.astro"
@@ -303,6 +304,25 @@ const toolsPage = getRelativeLocaleUrl(currentLang, "/tools/");
   }
 }
 
+/* 移动端滚动显隐：顶部常驻，下滑隐藏，上滑重现 */
+@media (max-width: 767px) {
+  .header-logo {
+    transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1), opacity 0.3s ease;
+  }
+
+  .header-logo.is-logo-hidden {
+    transform: translateX(-135%);
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header-logo {
+    transition: none;
+  }
+}
+
   #mobile-menu {
     display: block;
     opacity: 0;
@@ -339,6 +359,7 @@ const toolsPage = getRelativeLocaleUrl(currentLang, "/tools/");
 </style>
 
 <HeaderLogoFracture />
+<HeaderLogoScrollHide />
 <CopyEmail />
 <HeaderScroll />
 <PagefindLoader />
