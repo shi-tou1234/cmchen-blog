@@ -361,6 +361,12 @@ const aboutPersonal: AboutPersonal = {
       "content": [
         "主题切换回退至原版圆形揭示动画（移动端快照缺字问题暂缓处理）"
       ]
+    },
+    {
+      "date": "2026.9.9",
+      "content": [
+        "移动端顶栏显示博客标题与 slogan，向下滑动时隐藏、向上滑动时重新出现"
+      ]
     }
   ],
   "musicTracks": [
