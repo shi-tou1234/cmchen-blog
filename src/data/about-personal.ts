@@ -367,6 +367,12 @@ const aboutPersonal: AboutPersonal = {
       "content": [
         "移动端顶栏显示博客标题与 slogan，向下滑动时隐藏、向上滑动时重新出现"
       ]
+    },
+    {
+      "date": "2026.9.10",
+      "content": [
+        "字体方案改用系统字体栈，移除已失效的第三方字体镜像依赖，修复线上顶栏 logo 与 slogan 字体丢失"
+      ]
     }
   ],
   "musicTracks": [
