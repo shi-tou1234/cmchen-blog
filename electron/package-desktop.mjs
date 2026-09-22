@@ -26,10 +26,12 @@ mkdirSync(path.join(staging, 'electron'), { recursive: true });
 mkdirSync(path.join(staging, 'build'), { recursive: true });
 cpSync(path.join(root, 'electron', 'main.js'), path.join(staging, 'electron', 'main.js'));
 cpSync(path.join(root, 'dist'), path.join(staging, 'dist'), { recursive: true });
-// 应用图标（≥256 的正方形 png，electron-builder 自动转 ico）
-const iconSrc = path.join(root, 'electron', 'icon.png');
-const hasIcon = existsSync(iconSrc);
-if (hasIcon) cpSync(iconSrc, path.join(staging, 'build', 'icon.png'));
+// 应用图标：优先多尺寸 icon.ico（小尺寸更清晰），退回 icon.png，再退回默认
+const iconPng = path.join(root, 'electron', 'icon.png');
+const iconIco = path.join(root, 'electron', 'icon.ico');
+const hasIcon = existsSync(iconIco) || existsSync(iconPng);
+if (existsSync(iconPng)) cpSync(iconPng, path.join(staging, 'build', 'icon.png'));
+if (existsSync(iconIco)) cpSync(iconIco, path.join(staging, 'build', 'icon.ico'));
 
 const stagingPkg = {
   name: 'cmchen-blog-desktop',
@@ -46,7 +48,7 @@ const stagingPkg = {
     files: ['electron/**', 'dist/**'],
     win: {
       target: ['nsis', 'portable'],
-      ...(hasIcon ? { icon: 'build/icon.png' } : {}),
+      ...(hasIcon ? { icon: existsSync(iconIco) ? 'build/icon.ico' : 'build/icon.png' } : {}),
     },
   },
 };
