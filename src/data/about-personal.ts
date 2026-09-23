@@ -381,6 +381,12 @@ const aboutPersonal: AboutPersonal = {
         "动效：移除 AOS、入场动画收敛为一套 IntersectionObserver 机制，工具卡常显描述并收敛悬停动效，键盘导航接入页面过渡与加载遮罩",
         "适配：粒子与首页打字机补齐 prefers-reduced-motion，滚动条与原生控件补 color-scheme，硬编码颜色全部改为主题令牌"
       ]
+    },
+    {
+      "date": "2026.9.23",
+      "content": [
+        "顶栏：桌面端左上角标题、运行天数与 slogan 整体左移退回文章卡片左侧留白，滚动时不再压住卡片；位移量按视口留白自适应钳制，窄窗口自动收敛避免出界，移动端不受影响"
+      ]
     }
   ],
   "musicTracks": [
