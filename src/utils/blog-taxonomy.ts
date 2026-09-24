@@ -8,7 +8,7 @@ type BlogEntryWithLocaleStatus = {
 
 const CATEGORY_PARAM_PREFIX = 'b64-';
 export const STUDY_NOTE_CATEGORY = '学习笔记';
-const STUDY_NOTE_SUBCATEGORIES = new Set(['电路', '高数', '数电', '大物', '复变函数', '英语笔记']);
+const STUDY_NOTE_SUBCATEGORIES = new Set(['电路', '高数', '数电', '模电', '大物', '复变函数', '英语笔记']);
 
 // 浏览器兼容的 base64url 编解码（不依赖 Node 的 Buffer）
 function toBase64Url(input: string): string {
