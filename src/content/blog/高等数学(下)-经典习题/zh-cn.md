@@ -7,6 +7,7 @@ description:
 category: 学习笔记
 categories:
   - 学习笔记
+  - 数学
   - 高数
 slugId: 高等数学(下)-经典习题
 ---

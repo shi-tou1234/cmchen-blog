@@ -5,6 +5,10 @@ updatedDate: 2026-04-29T14:41:13.371Z
 draft: false
 description: 
 category: 高数
+categories:
+  - 学习笔记
+  - 数学
+  - 高数
 slugId: 不定积分
 ---
 

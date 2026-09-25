@@ -386,12 +386,17 @@ export function buildPostMarkdown(data: {
   image: string;
   category: string;
   subCategory?: string;
+  subCategory2?: string;
   slugId: string;
   content: string;
   pinned?: boolean;
 }): string {
   const imageLine = data.image ? `image: ${escapeFrontmatterValue(data.image)}\n` : "";
-  const categories = normalizeCategoryItems([data.category, data.subCategory || ""]);
+  const categories = normalizeCategoryItems([
+    data.category,
+    data.subCategory || "",
+    data.subCategory2 || "",
+  ]);
   const safeCategories = categories.map(escapeFrontmatterValue);
   const categoryLine = safeCategories[0] ? `category: ${safeCategories[0]}\n` : "";
   const categoriesLine = safeCategories.length > 0

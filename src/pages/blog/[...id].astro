@@ -74,10 +74,11 @@ const sameCategoryPosts = activeCategory
         .filter((post) => post.id !== entry.id && getPostCategories(post, currentLang).includes(activeCategory))
         .slice(0, 20)
     : [];
-const rootCategoryPageUrl = rootCategory && rootCategory !== activeCategory
-    ? getRelativeLocaleUrl(currentLang, `/categories/${encodeCategoryParam(rootCategory)}`)
-    : '';
 const categoryPageUrl = activeCategory ? getRelativeLocaleUrl(currentLang, `/categories/${encodeCategoryParam(activeCategory)}`) : '';
+const categoryLinks = currentCategories.map((category) => ({
+    category,
+    url: getRelativeLocaleUrl(currentLang, `/categories/${encodeCategoryParam(category)}`),
+}));
 const homeLabel = '首页';
 const updatedLabel = '最后更新于';
 const showUpdatedDate = entry.data.updatedDate && entry.data.updatedDate.valueOf() > entry.data.pubDate.valueOf();
@@ -103,18 +104,12 @@ const ogImageSrc = resolvedCover.source === 'user' ? resolveAssetUrl(userImage) 
         <div id="post-reading-shell" class="post-content-column">
             <nav class="mb-4 text-sm text-[var(--text-color)]/65" aria-label="面包屑导航">
                 <a href={getRelativeLocaleUrl(currentLang, '/')} class="hover:text-[var(--link-color)]">{homeLabel}</a>
-                {rootCategory && (
+                {categoryLinks.map((link) => (
                     <>
                         <span class="px-2">&gt;</span>
-                        <a href={rootCategoryPageUrl || categoryPageUrl} class="hover:text-[var(--link-color)]">{rootCategory}</a>
-                        {activeCategory && activeCategory !== rootCategory && (
-                            <>
-                                <span class="px-2">&gt;</span>
-                                <a href={categoryPageUrl} class="hover:text-[var(--link-color)]">{activeCategory}</a>
-                            </>
-                        )}
+                        <a href={link.url} class="hover:text-[var(--link-color)]">{link.category}</a>
                     </>
-                )}
+                ))}
                 <span class="px-2">&gt;</span>
                 <span class="text-[var(--text-color)]/90">{entry.data.title}</span>
             </nav>

@@ -5,6 +5,10 @@ updatedDate: 2026-05-19T14:14:11.681Z
 draft: false
 description: 
 category: 复变函数
+categories:
+  - 学习笔记
+  - 数学
+  - 复变函数
 slugId: 复变函数1
 ---
 

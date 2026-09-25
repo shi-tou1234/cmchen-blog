@@ -5,6 +5,10 @@ updatedDate: 2026-05-21T12:35:03.248Z
 draft: false
 description: 
 category: 高数
+categories:
+  - 学习笔记
+  - 数学
+  - 高数
 slugId: 无穷级数
 ---
 

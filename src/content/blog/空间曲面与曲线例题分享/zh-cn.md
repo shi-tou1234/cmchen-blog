@@ -4,6 +4,10 @@ pubDate: 2026-03-16T08:04:00.000Z
 draft: false
 description: 
 category: 高数
+categories:
+  - 学习笔记
+  - 数学
+  - 高数
 slugId: 空间曲面与曲线例题分享
 ---
 

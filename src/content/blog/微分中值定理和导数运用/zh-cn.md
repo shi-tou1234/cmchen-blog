@@ -4,6 +4,10 @@ pubDate: 2026-02-18T02:50:00.000Z
 draft: false
 description: 
 category: 高数
+categories:
+  - 学习笔记
+  - 数学
+  - 高数
 slugId: 微分中值定理和导数运用
 ---
 

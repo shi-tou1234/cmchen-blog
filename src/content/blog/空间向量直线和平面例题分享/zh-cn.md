@@ -4,6 +4,10 @@ pubDate: 2026-03-14T11:37:00.000Z
 draft: false
 description: 
 category: 高数
+categories:
+  - 学习笔记
+  - 数学
+  - 高数
 slugId: 空间向量直线和平面例题分享
 ---
 

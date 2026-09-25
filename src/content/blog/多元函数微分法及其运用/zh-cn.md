@@ -5,6 +5,10 @@ updatedDate: 2026-04-15T11:55:01.093Z
 draft: false
 description: 
 category: 高数
+categories:
+  - 学习笔记
+  - 数学
+  - 高数
 slugId: 多元函数微分法及其运用
 ---
 

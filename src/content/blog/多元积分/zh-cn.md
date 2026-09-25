@@ -5,6 +5,10 @@ updatedDate: 2026-04-29T15:17:54.402Z
 draft: false
 description: 
 category: 高数
+categories:
+  - 学习笔记
+  - 数学
+  - 高数
 slugId: 多元积分
 ---
 

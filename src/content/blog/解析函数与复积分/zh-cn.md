@@ -5,6 +5,10 @@ updatedDate: 2026-05-22T10:40:36.861Z
 draft: false
 description: 
 category: 复变函数
+categories:
+  - 学习笔记
+  - 数学
+  - 复变函数
 slugId: 解析函数与复积分
 ---
 

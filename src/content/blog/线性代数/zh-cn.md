@@ -6,6 +6,8 @@ draft: false
 description: 系统整理行列式的定义、展开方法、主要性质、矩阵运算推论、余子式恒等式与几何意义。
 category: 线代
 categories:
+  - 学习笔记
+  - 数学
   - 线代
 slugId: 线性代数核心笔记-行列式的定义与性质
 ---

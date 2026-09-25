@@ -4,6 +4,10 @@ pubDate: 2026-02-17T14:24:00.000Z
 draft: false
 description: 
 category: 高数
+categories:
+  - 学习笔记
+  - 数学
+  - 高数
 slugId: 导数和微分
 ---
 

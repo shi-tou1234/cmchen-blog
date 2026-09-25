@@ -107,6 +107,15 @@ const serializedSubcategoriesByRoot = JSON.stringify(
     Object.entries(subcategoriesByRoot).map(([k, v]) => [k, [...v]])
   )
 );
+const categoryParentMap = Object.fromEntries(
+  Object.entries(subcategoriesByRoot).flatMap(([parent, children]) =>
+    [...children].map((child) => [child, parent])
+  )
+);
+const serializedCategoryParents = JSON.stringify(categoryParentMap);
+const serializedCategoryDisplayNames = JSON.stringify(
+  Object.fromEntries(Object.keys(categoriesMap).map((category) => [category.toLowerCase(), category]))
+);
 const serializedCategoryCounts = JSON.stringify(
   Object.fromEntries(
     Object.entries(categoriesMap).map(([k, v]) => [k, v.length])
@@ -114,7 +123,7 @@ const serializedCategoryCounts = JSON.stringify(
 );
 ---
 
-<div class="archive-explorer grid gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,1fr)]" data-initial-category={initialCategory.toLowerCase()} data-top-level-categories={serializedTopLevelCategories} data-subcategories-by-root={serializedSubcategoriesByRoot} data-category-counts={serializedCategoryCounts} data-lang={language}>
+<div class="archive-explorer grid gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,1fr)]" data-initial-category={initialCategory.toLowerCase()} data-top-level-categories={serializedTopLevelCategories} data-subcategories-by-root={serializedSubcategoriesByRoot} data-category-parents={serializedCategoryParents} data-category-display-names={serializedCategoryDisplayNames} data-category-counts={serializedCategoryCounts} data-lang={language}>
   <section class="min-w-0 space-y-8">
     <div class="archive-explorer__toolbar">
       <button
@@ -290,21 +299,59 @@ const serializedCategoryCounts = JSON.stringify(
         .filter(Boolean);
       const selectedCategories = new Set();
 
-      const topLevelCategoriesList = (() => {
+      const topLevelCategoriesList: string[] = (() => {
         try { return JSON.parse(root.dataset.topLevelCategories || '[]'); }
         catch { return []; }
       })();
-      const subcategoriesByRootData = (() => {
-        try { return JSON.parse(root.dataset.subcategoriesByRoot || '{}'); }
-        catch { return {}; }
-      })();
+      const normalizeKeyedRecord = <T,>(raw: Record<string, T>) =>
+        Object.fromEntries(Object.entries(raw || {}).map(([key, value]) => [key.toLowerCase(), value]));
+      const subcategoriesByRootData = normalizeKeyedRecord<string[]>(
+        (() => {
+          try { return JSON.parse(root.dataset.subcategoriesByRoot || '{}'); }
+          catch { return {}; }
+        })()
+      );
+      const categoryParentsData = normalizeKeyedRecord<string>(
+        (() => {
+          try { return JSON.parse(root.dataset.categoryParents || '{}'); }
+          catch { return {}; }
+        })()
+      );
+      const categoryDisplayNamesData = normalizeKeyedRecord<string>(
+        (() => {
+          try { return JSON.parse(root.dataset.categoryDisplayNames || '{}'); }
+          catch { return {}; }
+        })()
+      );
       const categoryCountsData = (() => {
         try { return JSON.parse(root.dataset.categoryCounts || '{}'); }
         catch { return {}; }
       })();
 
+      const categoryDisplayName = (category: string) =>
+        categoryDisplayNamesData[category.toLowerCase()] || category;
+      const findChildren = (category: string) =>
+        subcategoriesByRootData[category.toLowerCase()] || [];
+      const resolveCategoryPath = (category: string) => {
+        const displayCategory = categoryDisplayName(category);
+        const path = [displayCategory];
+        const seen = new Set([displayCategory.toLowerCase()]);
+        let cursor = displayCategory;
+
+        while (true) {
+          const parent = categoryParentsData[cursor.toLowerCase()];
+          if (!parent || seen.has(parent.toLowerCase())) break;
+          const displayParent = categoryDisplayName(parent);
+          path.unshift(displayParent);
+          seen.add(displayParent.toLowerCase());
+          cursor = displayParent;
+        }
+
+        return path;
+      };
+
       let viewState = 'top';
-      let activeRootCategory = '';
+      let activePath: string[] = [];
       const pageLang = root.dataset.lang || 'zh-cn';
 
       const parseUrlCategories = () => {
@@ -603,11 +650,26 @@ const serializedCategoryCounts = JSON.stringify(
         updateSubcategoryActiveStates();
       };
 
-      const renderSubcategoryButtons = (subcategories: string[]) => {
+      const renderSubcategoryButtons = (path: string[], subcategories: string[]) => {
         if (!subChipsContainer) return;
         const backBtnEl = subChipsContainer.querySelector('.archive-explorer__back-btn');
         subChipsContainer.innerHTML = '';
         if (backBtnEl) subChipsContainer.appendChild(backBtnEl);
+
+        const currentCategory = path[path.length - 1];
+        if (currentCategory) {
+          const currentBtn = document.createElement('button');
+          currentBtn.type = 'button';
+          currentBtn.className = 'archive-explorer__chip archive-explorer__current-btn';
+          currentBtn.dataset.filterCategory = currentCategory.toLowerCase();
+          const currentCount = categoryCountsData[currentCategory] || 0;
+          currentBtn.innerHTML = `<span>全部（${currentCategory}）</span><span>${currentCount}</span>`;
+          currentBtn.addEventListener('click', () => {
+            if (!(currentBtn instanceof HTMLElement)) return;
+            toggleCategory(currentBtn.dataset.filterCategory || '');
+          });
+          subChipsContainer.appendChild(currentBtn);
+        }
 
         if (!subcategories.length) {
           const emptyMsg = document.createElement('div');
@@ -621,13 +683,26 @@ const serializedCategoryCounts = JSON.stringify(
           const btn = document.createElement('button');
           btn.type = 'button';
           btn.className = 'archive-explorer__chip';
-          btn.dataset.filterCategory = subcategory.toLowerCase();
           const count = categoryCountsData[subcategory] || 0;
-          btn.innerHTML = `<span>${subcategory}</span><span>${count}</span>`;
-          btn.addEventListener('click', () => {
-            if (!(btn instanceof HTMLElement)) return;
-            toggleCategory(btn.dataset.filterCategory || '');
-          });
+          const hasChildren = findChildren(subcategory).length > 0;
+
+          if (hasChildren) {
+            btn.dataset.drillCategory = subcategory;
+            btn.innerHTML = `<span>${subcategory} ›</span><span>${count}</span>`;
+            btn.addEventListener('click', () => {
+              if (!(btn instanceof HTMLElement)) return;
+              const child = btn.dataset.drillCategory || '';
+              if (child) enterSubView([...path, child], false);
+            });
+          } else {
+            btn.dataset.filterCategory = subcategory.toLowerCase();
+            btn.innerHTML = `<span>${subcategory}</span><span>${count}</span>`;
+            btn.addEventListener('click', () => {
+              if (!(btn instanceof HTMLElement)) return;
+              toggleCategory(btn.dataset.filterCategory || '');
+            });
+          }
+
           subChipsContainer.appendChild(btn);
         });
       };
@@ -735,32 +810,47 @@ const serializedCategoryCounts = JSON.stringify(
         });
       };
 
-      const enterSubView = (rootCategory: string) => {
-        if (viewState === 'sub') return;
-        viewState = 'sub';
-        activeRootCategory = rootCategory;
-
+      const renderSubView = (path: string[]) => {
         selectedCategories.clear();
-        const subcategories = subcategoriesByRootData[rootCategory] || [];
-        renderSubcategoryButtons(subcategories);
+        renderSubcategoryButtons(path, findChildren(path[path.length - 1]));
         applyFilter([], true);
         syncUrlCategories();
 
         if (viewTitle) {
-          const displayName = topLevelCategoriesList.find(
-            (cat: string) => cat.toLowerCase() === rootCategory
-          ) || rootCategory;
-          viewTitle.textContent = `# ${displayName}`;
+          const displayPath = path.map((category, index) => {
+            if (index !== 0) return category;
+            return topLevelCategoriesList.find(
+              (item: string) => item.toLowerCase() === category.toLowerCase()
+            ) || category;
+          });
+          viewTitle.textContent = `# ${displayPath.join(' / ')}`;
         }
+      };
 
-        animateViewSwitch(topView as HTMLElement | null, subView as HTMLElement | null, 'forward');
+      const enterSubView = (path: string[], animate = true) => {
+        if (!path.length) return;
+        const wasTop = viewState === 'top';
+        viewState = 'sub';
+        activePath = path;
+        renderSubView(path);
+
+        if (wasTop && animate) {
+          animateViewSwitch(topView as HTMLElement | null, subView as HTMLElement | null, 'forward');
+        }
       };
 
       const exitSubView = () => {
         if (viewState === 'top') return;
-        viewState = 'top';
-        activeRootCategory = '';
 
+        if (activePath.length > 1) {
+          const parentPath = activePath.slice(0, -1);
+          activePath = parentPath;
+          renderSubView(parentPath);
+          return;
+        }
+
+        viewState = 'top';
+        activePath = [];
         selectedCategories.clear();
         applyFilter([], true);
         syncUrlCategories();
@@ -778,9 +868,10 @@ const serializedCategoryCounts = JSON.stringify(
           const rootCategory = chip.dataset.rootCategory || '';
           if (!rootCategory) return;
 
-          const subcategories = subcategoriesByRootData[rootCategory] || [];
-          if (subcategories.length > 0) {
-            enterSubView(rootCategory);
+          const rootDisplay = categoryDisplayName(rootCategory);
+          const children = findChildren(rootDisplay);
+          if (children.length > 0) {
+            enterSubView([rootDisplay], true);
           } else {
             if (selectedCategories.has(rootCategory)) {
               selectedCategories.clear();
@@ -790,6 +881,7 @@ const serializedCategoryCounts = JSON.stringify(
             }
             applyFilter([...selectedCategories] as string[], true);
             syncUrlCategories();
+            updateSubcategoryActiveStates();
           }
         });
       });
@@ -971,9 +1063,9 @@ const serializedCategoryCounts = JSON.stringify(
         setSelectedCategories(urlCategories, false, false);
       } else if (initialCategories.length > 0) {
         const firstInitial = initialCategories[0];
-        const hasSubcategories = subcategoriesByRootData[firstInitial] && subcategoriesByRootData[firstInitial].length > 0;
+        const hasSubcategories = findChildren(categoryDisplayName(firstInitial)).length > 0;
         if (hasSubcategories) {
-          enterSubView(firstInitial);
+          enterSubView(resolveCategoryPath(firstInitial), false);
         } else {
           setSelectedCategories(initialCategories, false, false);
           updateRootChipActiveStates();
