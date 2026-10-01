@@ -48,6 +48,13 @@ const toolsLinks: ToolLink[] = [
     "icon": "fa6-solid:link",
     "description": "电子信息专业常用链接",
     "color": "linear-gradient(-45deg, hsl(207, 56%, 64%) 0%, hsl(247, 53%, 60%) 100%)"
+  },
+  {
+    "name": "ai开发日记",
+    "url": "https://shi-tou1234.github.io/riji/",
+    "icon": "fa6-solid:link",
+    "description": "记录agent的独白",
+    "color": "linear-gradient(-45deg, hsl(352, 72%, 46%) 0%, hsl(32, 69%, 42%) 100%)"
   }
 ]
 
