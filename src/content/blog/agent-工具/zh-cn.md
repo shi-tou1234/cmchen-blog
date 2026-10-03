@@ -1,90 +1,57 @@
 ---
 title: agent 工具
 pubDate: 2026-06-24T10:33:00.000Z
-updatedDate: 2026-08-28T14:35:46.897Z
+updatedDate: 2026-10-03T12:00:00.000Z
 draft: false
 pinned: true
-description: 
+description: 持续更新的 AI Agent 工具盘点：编程 Agent 与办公 Agent 两大体系，含最新价格、限额与选型建议（2026 年 10 月核对）。
 category: 工具使用
 categories:
   - 工具使用
 slugId: agent-工具
 ---
 
-事情是这样的。很多新的框架出来了，有些已经消失了。前段时间一直在折腾各种 AI 编程工具，从 Trae 到 Codex 到 Claude Code 到各家国产 CLI，基本上市面上能叫得上名字的我都试了一遍。
+事情是这样的。很多新的框架出来了，有些已经消失了。前段时间一直在折腾各种 AI 编程工具，从 Codex 到 Claude Code 到各家国产 CLI，基本上市面上能叫得上名字的我都试了一遍。
 
 怎么说呢，踩了不少坑，也发现了一些真的很好用的东西。我觉得还是值得把这些经历整理一下，给也在挑工具的朋友们一个参考。毕竟每个人的情况不一样，有人有 GPT Plus，有人有学生认证，有人啥都没有就想白嫖，选择真的差很多。
 
-这篇我重新核对了一遍最新的动态（截至 2026 年 8 月底），之前写的一些内容已经过时了，这次全部修正。
+这篇是 2026 年 10 月初的核对版。跟上版比最大的变化有两个：一是全文重排成**编程 Agent** 和 **办公 Agent** 两大体系——现在各厂的产品线都是「一个平台打全家」，混在一起写早就乱了；二是砍掉了一批叫不上名字的小众产品，只留下真正跑出来的。之前写的一些内容已经过时了，这次全部修正。
 
 好，一个一个来聊。
 
 * * *
 
-## Trae / TraeWork
+## 一、编程 Agent 体系
 
-* [官网](https://www.trae.cn/)
+编程这边今年的主旋律依然是「洗牌」：单点插件全消失了，活下来的都变成了平台，而且一个个都从本地单干进化到了云端多 Agent 分工。我按海外和国产分开说。
 
-字节跳动出的 AI 原生 IDE，基于 VS Code 改的，是国内首款 AI 原生 IDE。官方月活已经超百万，在国内工具里算是跑出来的那一个。
+### 海外系
 
-现在的 Trae 已经不只是个编程工具了。打开 trae.cn 你会看到一句话：「复杂工作，就用 TraeWork」。整个产品升级成了一个 AI 工作台，**Work、Code、Design 三种模式一键切换**：
+#### Claude Code
 
-* **Code 模式**：就是原来的 AI 编程 IDE，SOLO 智能体自己读需求、写代码、跑验证；
-* **Work 模式**：TraeWork，自动生成 PPT、数据分析、深度研究、写文档那一套，能调用飞书、微信、钉钉的插件；
-* **Design 模式**：设计向的。
+* [官网](https://code.claude.com/)
 
-**价格方面有个好消息和一个坏消息。**
+Anthropic 出的终端 AI 编程框架。怎么说呢，目前我用过的工具里功能最完善、体验最好的，这一点到现在也没变。调度一堆子 Agent 并行干活、互相检查的那套玩法，它依然是玩得最溜的。
 
-好消息：国内版 **SOLO 模式完全免费**，从去年 11 月底上线等到今年 1 月正式全量放开，SOLO Coder 里内置了好几个模型随便切换，包括字节自研的 Doubao-Seed-Code、智谱的 GLM-4.7 / GLM-4.6 等，全部免费。免费档每个月还有 500 积分、支持 2 个云端任务并行（Seed 模型还打 2.5 折）。
+8 月底到 9 月它也没闲着，版本号一路推到 v2.1.269，值得知道的几件事：
 
-坏消息：最近 TRAE 国内版**悄悄上线了对话限额**，免费账号和 Pro 套餐都受影响，限制维度是每日、每周、每月的累计次数上限。也就是说"完全免费"还在，但"无限白嫖"没有了。免费用户高峰期响应还是会慢一些——高峰期优先响应现在是付费权益。
+* **新模型进驻**：9 月初新版模型登陆 Claude Code，直接给了 100 万 token 上下文，长仓库随便塞；
+* **Auto 模式转正**：8 月 14 日起成为 Pro / Max / Team 新会话的默认权限模式，不用每个命令都手动批；Desktop 端撞到会话上限后勾选「Auto-continue when limits reset」，限额一重置就自动接着跑；
+* **桌面端和终端互通了**：Desktop 里输入 `/resume` 就能接续之前的 CLI 会话，Claude Code 面板还能从 Desktop 里弹出来当独立窗口用；
+* **记忆系统打通**：8 月下旬起云端 Memory 跨聊天和 Cowork 生效，跨设备接着上次干活；手机上还能通过 `claude remote-control` 以设备卡片形态远程唤起任务；
+* **插件可评测**：新增 `claude plugin eval`，能用测试用例给插件打分、和不用插件的基线做对比，写 skill 的人有官方量尺了。
 
-我的感受没变：它依然是目前国内最值得当主力免费工具的选择之一，但如果你是我这种一天重度对话几百轮的人，额度烧起来会肉疼。
+但是。
 
-:::tip[注意]
-Trae 国内版依然是免费党的首选，SOLO 全免 + 多个国产大模型内置。但注意已经上了对话限额，「白嫖」的黄金期过去了。国外的 trae.ai 不推荐，性价比太低。
-:::
+封号风险是真的存在的。官方的登录方式如果你走非官方渠道，比如第三方中转 API、共享账号这些，被封的概率很大。我自己就踩过这个坑，具体怎么安装怎么配置我之前发过教程，这里就不多说了。
 
+另外提醒一句：它烧 token 也是真的猛，喜获过「硅谷第一烧钱包」的外号。订阅是 Pro 20 刀、Max 100 到 200 刀一个月。之前那个 API 促销价（输入 $2 / 输出 $10 每百万 token）8 月 31 日已经结束，重度 API 用户按标准价掂量着来。如果怕封号风险又想用，那就走官方正规渠道，别乱跳 IP，问题不大。预算有限的，可以考虑后面的 GLM Coding Plan 把国产模型接进来替它打工，成本能砍一个数量级。
 
-* * *
-
-## 办公 Agent 三强：WorkBuddy、豆包工作、千问办公
-
-编程卷完了，大厂开始卷办公。今年这条赛道直接打成三国杀。先看数据（易观二季度报告）：腾讯 WorkBuddy 6 月单月访问量 2097 万次，断层第一，比第二、三名加起来还多；字节系（Trae）第二，1279 万次；阿里 QoderWork 第三，788 万次。我把三家都摸了一遍：
-
-* [腾讯 WorkBuddy](https://www.workbuddy.cn/)：目前跑得最快的那个。主打「一人指挥，全行业专家执行」，多个 Agent 并行协作，能切 5 家主流模型，桌面、微信小程序、主流 IM 全平台免部署即用，甚至能用手机远程指挥家里电脑干活。最近又发了企业版和覆盖 20 多个垂直场景的 Agent Suite，配上管理后台。经 2000 多个腾讯内部员工实测，号称 10 分钟上手。
-* [豆包工作](https://www.doubao.com/download/desktop)：字节 8 月 25 号刚发布的全新品牌。写文档、做 PPT、搞表格、整理会议纪要是基本功，还能搭系统、操作虚拟桌面和浏览器，配了定时任务、技能（Skills）和连接器体系。最大的差异化是用飞书账号登录后直接继承你在飞书里的全部工作上下文——字节是想拿豆包 3.82 亿的 C 端月活往 B 端撕口子。
-* [千问办公 QwenWork](https://www.aliyun.com/product/qwenwork)：阿里的打法是「三合一」，由 QoderWork、MuleRun 和悟空整合而来，业内第一个同时覆盖桌面端 Agent、云端 Agent、企业协同 Agent 三种形态的产品。PPT、数据分析、网页生成到在线发布一条龙，桌面版已上线，后面会深度内置钉钉。公测当天阿里还顺手发了 Qwen3.8 旗舰模型（2.4 万亿总参数的稀疏 MoE）给它当底座。
-
-机构预估 2026 年中国企业级 AI 智能体市场规模有 449 亿元。我的感受是：三家真正在抢的是「任务分配权」——以后你的指令到底是发给聊天框还是发给一个 Agent 工作台，这件事它们都想说了算。
-
-:::note
-个人轻度使用先试 WorkBuddy 或豆包工作；重度飞书用户选豆包工作；公司用钉钉和阿里云的，等千问办公内置钉钉后再上车不迟。
-:::
-
-
-* * *
-
-## GitHub Copilot / Codespaces
-
-* [Copilot 官网](https://github.com/features/copilot) / [Codespaces 官网](https://github.com/features/codespaces)
-
-这玩意儿曾经对学生是真的香。教育邮箱认证拿 GitHub Pro，再蹭 Codespaces 的云开发环境和模型额度，简直捡到了宝。
-
-但后面的剧情大家也猜到了。**2026 年 6 月 1 号起，GitHub Copilot 全线套餐转成了按用量计费**：原来的「高级请求次数」（premium request units）没了，换成按模型和 token 消耗算钱的 GitHub AI Credits。订阅费本身没涨（Free 还是 0 刀，Pro 还是 10 刀，Pro+ 39 刀，Business 19 刀），但你实际花多少，取决于你用什么模型、烧多少 token。
-
-我说个真实的数据感受：按 token 算钱之后，一个小 bug 的修复就能吃掉一大笔 Credits。那点额度，修几个 bug 就没了。
-
-Codespaces 本身倒还活着，个人账号每月仍有免费的计算和存储额度，学生认证还能更多。但你要是想在里面跑大模型做 AI 编程，那些免费额度真的扛不住按 token 的消耗。
-
-不过要说 GitHub 这边的进展，**Copilot CLI 反而值得看一眼**：今年的 Build 大会上 Copilot CLI 大版本刷新，橡皮鸭调试、定时排队提示词、语音输入这些能力都正式可用了；Copilot coding agent 也进了 Enterprise Cloud 还支持数据驻留；甚至能在 Slack 里直接@它干活。微软是把 Agent 往整个开发流程里塞。
 :::warning
-对想白嫖 GPT/Gemini 写代码的学生党来说，Codespaces + Copilot 的红利期基本结束了，按用量计费之后只适合轻度使用。可以说是基本用不了
+Claude Code 功能最强，但封号风险和 Token 成本都高。建议走官方渠道；预算紧的组合拳是用第三方兼容端点接国产模型。
 :::
 
-* * *
-
-## OpenAI Codex
+#### OpenAI Codex
 
 * [官网](https://openai.com/index/codex/)
 
@@ -94,14 +61,16 @@ Codespaces 本身倒还活着，个人账号每月仍有免费的计算和存储
 
 如果你有 GPT 账号，买个 Plus 会员，日常额度就挺够用的，尤其是配合 Cursor 或者终端里跑。
 
-先理一下它的模型节奏，这一年多是真快：
+这一年的迭代节奏快得吓人，后端模型换了一茬又一茬（这部分就不展开了，只提醒一句：老模型会持续退役，8 月 31 号就有一批旧模型从 Codex 下线，项目里锁着旧模型 ID 的记得趁早切）。
 
-* **2025 年 9 月**：GPT-5-Codex，第一个专门为 Codex 调优的编程特化模型；
-* **2026 年 2 月**：GPT-5.3-Codex，比上一代快约 25%；
-* **2026 年 4 月**：GPT-5.5 家族进 API；
-* **2026 年 8 月初**：GPT-5.6 已在 ChatGPT 推开，Plus / Pro 用户可用。
+更要紧的变化在框架本身。9 月 30 日 DevDay 一发不可收拾，25 项更新里编程相关的重头戏全落在 Codex 这个 harness 上——它正在变成一个「云端软件工程团队」：
 
-坏消息也有一个：**GPT-5.4 和 GPT-5.4-mini 将在 8 月 31 号从 Codex 里退役**。要是你的项目配置还锁着老模型，记得趁早切到新的，不然月底直接报错给你看。
+* **云端长跑**：任务丢给云端，本地设备合盖休眠照样继续；
+* **多 Agent 并行**：新增 `/agents` 界面，几个 Agent 同时干活；
+* **代码评审正式成为功能**：支持自动评审，还顺手发布了 Codex Security Cloud，直接扫 GitHub 仓库找漏洞、生成修复方案；
+* **能力开放**：Agents API 里可以跑 OpenAI 托管的 Codex harness，沙箱执行代码、改文件、接 MCP Server，等于别人也能把 Codex 的运行时搬进自己产品。
+
+订阅方面 OpenAI 恢复了 $200/月的 Pro，还新增了 $500 的 Pro 500，可用额度约为 Plus 的 25 倍，附带 Ultrafast 提速档（Codex 最高约 300 tokens/s，约 8 倍速）。
 
 我的建议一直没变：有会员就无脑入，目前综合体验排前列的编程 Agent。没有 GPT 账号的，也可以看看后面智谱那段，用国产模型接到各种工具里曲线救国。
 
@@ -109,215 +78,162 @@ Codespaces 本身倒还活着，个人账号每月仍有免费的计算和存储
 Codex 是目前综合体验最好的 AI 编程 Agent 之一，有 GPT 会员的话无脑入
 :::
 
-
-* * *
-
-## Claude Code
-
-* [官网](https://code.claude.com/)
-
-Anthropic 出的终端 AI 编程框架。怎么说呢，目前我用过的工具里功能最完善、体验最好的，这一点到现在也没变。调度一堆子 Agent 并行干活、互相检查的那套玩法，它依然是玩得最溜的。
-
-最近几个月值得知道的几件事：
-
-* **Auto 模式成了默认**：8 月中旬开始，Pro / Max / Team 的新会话默认启用 Auto 模式，权限判断交给它自己来，不用每个命令都手动批；
-* **API 促销价**：8 月 31 号前 API 有促销价，输入 $2 / 输出 $10 每百万 token，需要 v2.1.197 以上版本——这个价格对重度 API 用户来说是真便宜；
-* **记忆系统打通**：8 月下旬云端 Memory 已经跨聊天和 Cowork 生效，跨设备接着上次干活的体验好了不少。
-
-但是。
-
-封号风险是真的存在的。官方的登录方式如果你走非官方渠道，比如第三方中转 API、共享账号这些，被封的概率很大。我自己就踩过这个坑，具体怎么安装怎么配置我之前发过教程，这里就不多说了。
-
-另外提醒一句：它烧 token 也是真的猛，喜提过「硅谷第一烧钱包」的外号。价格 Pro 20 刀一个月，Max 100 到 200 刀。如果怕封号风险又想用，那就走官方正规渠道，别乱跳 IP，问题不大。预算有限的，可以考虑下面的智谱方案把 GLM 接进来替它打工，成本能砍一个数量级。
-
-:::warning
-Claude Code 功能最强，但封号风险和 Token 成本都高。建议走官方渠道，预算紧的组合拳是用第三方兼容端点接国产模型。
-:::
-
-* * *
-
-## Qoder CN（原通义灵码）
-
-* [官网](https://lingma.aliyun.com/) / [更新日志](https://help.aliyun.com/zh/lingma/qoder-cn-update-log)
-
-阿里的，以前叫通义灵码。**2026 年 5 月 20 号正式更名为 Qoder CN**，注意这不只是改名——跟着一起来的还有收费模式调整，以前一部分免费敞开用的 AI 编程功能收进了会员体系里。是的，国产厂商也开始收缩免费额度了，这点后面行业趋势那节细说。
-
-产品本身底子还是有的：
-
-* **Qwen-Coder-Qoder 模型**：今年 2 月引入的编程特化模型，就是官网默认那套底座；
-* **NES 行间预测**：光标还没动它就在猜你下一行要写什么，预测准的时候很爽；
-* **自定义模型接入**：IDE 端可以用自己的 API Key 接阿里系模型，个人专业版玩得动；
-* 迭代速度快，8 月 25 号刚发了 v1.26.0，JetBrains 端的编程智能体也有了任务规划、消息排队这些能力。
-
-另外阿里的办公 Agent 线就是 **千问办公（QwenOffice）**，主攻 B 端企业市场。在易观那份二季度的桌面办公智能体报告里，QoderWork 系排在第三名。
-
-跟 Trae 比，Qoder CN 的优势是不用抢高峰资源、模型底子是自家最强的编程模型；劣势是免费的部分越来越少了。适合拿 Qwen 当主力模型的开发者。
-
-:::note
-Qoder CN 产品力在线、迭代勤快，但 5 月改名之后免费力度明显收敛。想白嫖的去 Trae，正经干活的可以试试它的专业版。
-:::
-
-* * *
-
-## Cursor
+#### Cursor
 
 * [官网](https://cursor.com/)
 
-海外这边必须单独说一下 Cursor，因为它已经不是"又一个 VS Code 套壳"了。
+海外这边必须单独说一下 Cursor，因为它已经不是「又一个 VS Code 套壳」了。
 
-两个关键动作：
+自研模型和代码托管两头都在跑：**Composer 2.5** 主打自主 Agent 批量干活；**Origin 代码托管** 8 月 13 号上线，编辑器只是入口，它想把你的整个仓库生命周期都留在自己生态里。最新一轮估值到了 290 亿美元左右，依然是独立 AI 编程公司里的天花板。20 刀一个月的订阅，对能榨出效率的人来说回本很快。
 
-* **自研模型一路狂奔**：从 Composer 1.0 开始脱离对 Anthropic/OpenAI API 的依赖，到现在的 **Composer 2.5**，主打自主 Agent 批量干活，迭代速度快到离谱（1.5 到 2.5 就隔了几个月）；
-* **Origin 代码托管**：8 月 13 号上线的，Cursor 直接做起了代码托管平台，编辑器只是入口，它想把你的整个仓库生命周期都留在自己生态里。
+8 月底以来的更新节奏也很快，几个关键词：
 
-资本市场也给面子，最新一轮估值到了 290 亿美元左右，是独立 AI 编程公司里的天花板。20 刀一个月的订阅，对能榨出效率的人来说回本很快。
+* **Cloud Agents 从零开跑**（8/27）：不用先连 GitHub，后台直接建 Cursor Origin repo，还能把云端环境端口转发到浏览器预览、连 Vercel 发布；
+* **自托管机器**（9/2）：代码、构建产物和密钥全留在你自己网络里，云 Agent 可以跑在 AWS Lambda、Cloudflare、Daytona、Modal 这些自有基础设施上；
+* **Projects**（9/10）：coordinator 不写代码，只负责规划并派活给实现 Agent，云和本机之间同步上下文，能盯 Slack、定时跑、跟进 PR——多 Agent 分工正式产品化；
+* **Rollouts + Security Review**（9/23）：给每个 PR 挂部署监控和漏洞审查，发现回归就通知作者甚至开 revert PR，但不会自己合并。
 
 :::note
-Cursor 目前是"商用成熟度 + 自研模型进度"平衡得最好的一个，订阅制明码标价不整乱七八糟的幺蛾子，适合愿意付费的主力开发者。
+Cursor 目前是「商用成熟度 + 自研模型进度」平衡得最好的一个，订阅制明码标价不整乱七八糟的幺蛾子，适合愿意付费的主力开发者。
 :::
 
+### 国产系
 
-* * *
+#### Qoder CN（原通义灵码）
 
-## 其他值得关注的新东西
+* [官网](https://qoder.com.cn/)
 
-### **AWS Kiro**
+阿里的，以前叫通义灵码，**2026 年 5 月 20 号正式更名 Qoder CN**。跟着改名一起来的还有收费模式调整，以前一部分免费敞开用的 AI 编程功能收进了会员体系里。是的，国产厂商也开始收缩免费额度了，这点后面行业趋势那节细说。
 
-亚马逊的入局之作，2025 年 7 月发布，打法跟别人不一样：**Spec 驱动开发**——你先用自然语言描述需求，它先给你生成需求文档、设计文档、任务拆解，然后才动手写代码，相当于把"软件工程流程"灌进了 AI。有 IDE 和 CLI 两形态，还有一个能全自主跑完整任务的 Autonomous Agent（网页预览版）。路透社去年报道过亚马逊内部要求工程师优先用 Kiro、不再支持第三方 AI 编程工具。定价 Free 给 50 credits，往上 Pro 20 刀到 Power 200 刀。适合被"vibe 出来一堆屎山"坑过的团队。
+产品本身底子还是有的，而且现在已经是一个产品家族，不再只是 IDE 插件：
 
-### **Cognition / Devin Desktop**
+* **桌面端（New Qoder）**：从 IDE 的 Quest 模式独立出来的完整任务委托台，和 IDE 并行提供、互不替代，首次使用可从 IDE 导入历史会话和记忆；
+* **IDE + JetBrains 插件**：老本行，智能补全、行间预测（NES）、对话编程；
+* **CLI / Agent SDK / Cloud Agents**：命令行、可编程和云端智能体全都有；
+* **QoderWake**：定位「AI 员工」；以及面向企业的 **企业版**。
 
-Cognition 去年收购 Windsurf 之后，今年 6 月 2 号把编辑器整包升级成了 **Devin Desktop**，原 Cascade 引擎 7 月 1 号退役，换成了 Rust 重写的 Devin Local。等于 Windsurf 这个牌子彻底消失，变成了 Devin 的桌面指挥台。资本层面更夸张：D 轮刚融了 10 亿美元、估值 260 亿，8 月中旬 TechCrunch 又曝出新一轮谈判估值 400 亿往上。如果你想要的是"提需求，等结果"的全自主路线，它是目前最接近这个愿景的产品。
+能力地图也铺得很全：知识中心（Knowledge Base / Repo Wiki）、内置浏览器和终端、代码安全扫描、Skills / Plugins / Connectors / Hooks 扩展体系，还有子智能体和自定义智能体团队。
 
-### **Lovable**
+Qoder CN 的优势是不用抢高峰资源、模型底子是自家最强的编程模型；劣势是免费的部分越来越少了。适合拿 Qwen 当主力模型的开发者。
 
-8 月 12 号 Reuters 确认拿了 4 亿美元的 C 轮，估值 133 亿。主打纯聊天式建站，月访问量 6 亿。非程序员做出能用的东西的最短路径，评价两极分化很严重——爱的人当神，恨的人喊骗局。
+:::note
+Qoder CN 产品力在线、迭代勤快，但 5 月改名之后免费力度明显收敛。想零成本入门的建议再看看别家，正经干活的可以试试它的专业版。
+:::
 
-### **Replit Agent 3**
+#### ZCode（GLM 官方 Harness）
 
-今年 3 月估值冲到 90 亿美元，半年翻了三倍。云端的 vibe coding 平台，Agent 3 能自己建数据库、自己测试自己部署。公司据说今年要冲 10 亿美元营收。适合从零到一快速做个能上线的小产品。
+* [官网](https://zcode.z.ai/cn)
 
-### **Cloudflare Kitesurf**
+智谱出品的 AI 编程工具，定位很明确：**GLM 旗舰模型的官方 Harness**（官网原话）。最新版本已经迭代到 v3.14.4，深度集成自家旗舰模型，走的是多智能体协作的 Agentic Development Environment 路子：
 
-8 月上旬发的，很有意思的方向：**给 AI Agent 专用的浏览器**。跑在 Workers 的 V8 isolate 里，压根不是 Chromium，官方称 CPU 和内存占用比 Chromium 低 3 到 7 倍。beta 期间通过 Browser Run 免费用。你自己搭 Agent 管线需要浏览器自动化时可以直接上。
+* **Goal 管理**：任务按项目分组，持续规划、执行、验证，多步骤工作稳步推进；
+* **多智能体执行**：一个目标拆给多个 Agent 并行干，各自汇报进度和 token 消耗；
+* **远程唤起**：通过微信、飞书或 Telegram 就能唤起 Bot，让任务随时进入执行状态；
+* 内置终端和 Git 面板，改动、提交、切分支不用出工具。
 
-* * *
+配套的 **GLM Coding Plan** 必须重点讲，这是预算敏感型玩家的命根子：
 
-## 国产编程 Agent 大乱斗：dsh、Kimi Code、ZCode、MiMo Code、MMX-CLI
+* **Lite**：连续包月约 ¥94/月（划线价 ¥118，海外版只要 $10），每周 10000 积分，小型仓库轻量迭代够用；
+* **Pro**：约 ¥430/月（划线价 ¥538），6 倍额度，优先体验最新旗舰模型和功能；
+* **Max**：约 ¥862/月（划线价 ¥1078），14 倍额度，高峰期专属资源优先保障。
 
-这一块可能是今年国内变化最大的地方。各家模型厂都想明白了一件事：光有模型不够，还得有自己的 Agent 运行时框架——圈子里管这个叫 harness，「模型决定上限，harness 决定下限」。挨个说：
+关键是它能直接接进 Claude Code、Cursor 等 20+ 主流编程工具当模型底座——以国产价格买到接近旗舰的编码能力，依然是预算敏感型的最优解。不过年初调过一次价，早期 20 块一个月的白菜价一去不复返了。
 
-### DeepSeek Harness（dsh）
+#### MiniMax Code
 
-8 月 13 号刚发生的重磅事件：DeepSeek 开源了它的首款智能体框架 **Harness**，命令行叫 `dsh`，MIT 协议。核心理念很激进——**「一切皆插件」（Everything is a Plugin）**。它没打算模仿 Claude Code 的交互形态，而是给你一套「Model + Harness = Agent」的底层执行框架，想怎么拼装随你。社区对它的定位是给开发者的 Agent 运行时底座，喜欢 DIY 的人这波有福了。
+* [官网](https://agent.minimaxi.com/)
 
-### Kimi Code
+MiniMax 的桌面端 AI Agent 应用，把对话、项目工作区、文件操作、终端、浏览器、记忆和自动化任务全塞进同一个本地应用，Mac 和 Windows 都能装。最大的特色是 **Coding / Work 双模式**：前者保留完整开发上下文，后者聚焦任务进度和交付；外加**电脑操控**——Agent 能直接操作你电脑上的图形界面应用，干那些只能点鼠标的活。
 
-月之暗面的开源终端编程 Agent（前身是 1024 程序员节放出的 Kimi CLI），Apache 2.0 真开源、不绑定模型，能读写代码、执行 Shell 命令、搜文件、抓网页，还有 VS Code 插件。模型线一直猛更：K2.6 号称能连续编码 13 小时、单任务改 4000 多行代码，最新的专用编程模型是 K2.7 Code（256K 上下文）。但老问题还是那个老问题——价格对免费用户一如既往地不友好。
+还有无限画布整理素材、插件和自定义 Mini App、定时自动化任务，以及 Remote Control / IM 连接实现手机端协同。可以用它家托管模型，也可以配自己的 API Key。速度确实可以，价格也比海外旗舰友好，但冲量之前记得看清楚资费。
 
-### ZCode
+#### OpenCode
 
-智谱出品的 AI 编程工具，定位很明确：**GLM 旗舰模型的官方 Harness**（官网原话）。去年 12 月底首发，现在已迭代到 ZCode 3.0——换上了全自研的 Agent 内核，深度适配自家 GLM 模型，分组任务工作区、Zread 知识库、Git 分支图这些都配齐了，走的是 Agentic Development Environment 的路子。
+如果你是「谁都不绑定」派，它是第一个该看的。开源编码 Agent，终端 / IDE / 桌面三端，GitHub 20.8 万 Star、950 多位贡献者、月活开发者 1600 万，通过 Models.dev 支持 75+ 模型供应商零锁定，本地模型也能接。
 
-配套的 **GLM Coding Plan** 必须重点讲：Lite 连续包月 118 元（海外版只要 $10），Pro 538 元起，能直接接进 Claude Code、Cursor、Cline 这些主流工具当模型底座。以国产价格买到接近旗舰的编码能力，依然是预算敏感型的最优解。不过注意年初调过一次价，早期 20 块一个月的白菜价一去不复返了。
+今年的重头戏是 **V2**：多会话并行（一个项目多个 Agent 同时跑）、LSP 自动加载、Share links 分享会话、能用 GitHub Copilot 或 ChatGPT 账号直接登录，还自带一套精选模型集 Zen。官方明确说不存你的代码和上下文数据。配置已全面换成原生 V2 格式，从 V1 迁移记得用官方迁移命令。安装一行脚本：`curl -fsSL https://opencode.ai/v2/install | bash`。
 
-### 小米 MiMo Code
+#### DeepSeek Harness（dsh）
 
-比较新的玩家：开源的终端 AI 编程助手，官方口号「始于编程，不止于编程」，内置限时免费的旗舰多模态模型，全中文界面，两步装完就能跑。主打卖点是持久记忆系统，专治长任务干着干着忘事的老毛病。免费是真免费，但我还是那句话：便宜的代价你得心里有数，复杂活儿别抱太高期待，轻度使用配合小米家的 Token Plan 正合适。
+8 月 13 日 DeepSeek 开源的首款智能体框架，命令行叫 `dsh`，MIT 协议，现在进了公开预览阶段。核心理念很激进——**「一切皆插件」（Everything is a Plugin）**：它没打算模仿 Claude Code 的交互形态，而是给你一套「Model + Harness = Agent」的底层执行框架，想怎么拼装随你。
 
-### MiniMax Code / MMX-CLI
+最近这版更新下来，它早就不是「只能敲命令行的玩具」了：
 
-MiniMax 双线出击：一边是桌面端的 **MiniMax Code**，把对话、项目工作区、文件操作、终端、浏览器、记忆、自动化任务全塞进同一个本地应用，Mac 和 Windows 都能装；另一边是 4 月发布的命令行工具 **MMX-CLI**，让 Agent 在终端里调它家全套多模态能力（文本、图像、视频、音乐、语音都能使唤）。模型底座 M2/M2.1 挺能打，在多语言软件工程榜单上拿过 49.4% 的成绩，价格只有海外旗舰的零头。速度确实可以，但重度实测下来适合中等强度的活儿，冲量之前记得看清楚 Coding Plan 资费。
+* **桌面端来了**：macOS / Windows 直接装客户端，也能 `npx @deepseek-ai/dsh web` 起 Web UI；
+* **办公技能点满**：整理文件、分析表格、写文档、做幻灯片，docx / xlsx / pdf / md 都能直接预览，代码改动有 diff；
+* **官方插件上架**：Agent teams、定时任务（Scheduled tasks，比如每周五自动生成本周项目周报）、自动审批、语音输入都在 experimental 区，还有 Creator mode 用聊天生成插件；
+* **开发者视角**：执行轨迹带 Duration / Turns / Calls 明细，每个工具调用的入参出参都能翻。
 
-### 其他值得留名的
+喜欢 DIY 的人这波有福了：写插件、拼自己的 harness，社区插件用 `dsh-plugin` 话题就能搜到。
 
-* **Qwen Code**（通义实验室）：Apache 2.0 开源，对标 Claude Code 的思路，喜欢自己折腾管线的人可以魔改；
-* **百度文心快码（Comate）**：免费、中文场景友好，官方口径代码采用率 44%，持续加全局 Rules 和多模型接入，轻度使用足够；
-* **OpenCode**：严格说不是国产（SST 团队出品），但必须提一嘴——终端/IDE/桌面三端的开源 Agent，GitHub 近 20 万 Star、900 多位贡献者，支持 75+ 模型零锁定，今年初还接入了 GitHub Copilot 权限。想要一个谁都不绑定的自由底座，就是它了。
-
-:::tip[自定义标题]
+:::tip[不要错过]
 腾讯的 **CodeBuddy** 也在这波里：年初 CodeBuddy Code 2.0 里 90% 的代码是自己写的（四个工程师 58 天出货 79 个版本），还有面向研发全流程的云端智能体 NPC，腾讯内部 90% 的员工都在用。混元底子 + 腾讯云生态，企业用户可以关注。
 :::
 
-
 * * *
 
-## 已消失或被整合的工具
+## 二、办公 Agent 体系
 
-这个名单一直在变长，这也是这个行业的残酷之处：
+编程卷完了，大厂开始卷办公。今年这条赛道直接打成三国杀，最近又挤进来一个做模型的。先看数据（易观二季度报告）：腾讯 WorkBuddy 6 月单月访问量 2097 万次，断层第一，比第二、三名加起来还多；字节系（Trae）第二，1279 万次；阿里 QoderWork 第三，788 万次。机构预估 2026 年中国企业级 AI 智能体市场规模有 449 亿元，三家真正在抢的是「任务分配权」——以后你的指令到底是发给聊天框还是发给一个 Agent 工作台，这件事它们都想说了算。
 
-* **Windsurf（原 Codeium）**：先被 Google 用 24 亿美元挖走 CEO 和核心团队，剩余资产被 Cognition 收购。2026 年 6 月品牌正式退役，变成 Devin Desktop，Cascade 引擎 7 月 1 号停服。
-* **iFlow CLI（心流）**：阿里的免费终端智能体，号称国产 Claude Code，2026 年 4 月 17 号正式关停。免费的东西说没就没。
-* **Gemini CLI / Gemini Code Assist（免费个人版）**：2026 年 6 月 18 号起停止对免费个人用户服务，全员迁去 Antigravity。
-* **Amazon CodeWhisperer**：早已更名为 Amazon Q Developer，原品牌退役。
-* **OpenAI Operator**：已并入 ChatGPT，不再作为独立产品。
-* **豆包 MarsCode**：字节早期的 AI 编程产品，已被 Trae 取代。
-* **通义灵码**：2026 年 5 月更名为 Qoder CN。
+顺带提一句：字节那边发布时声势最大的办公平台 **TraeWork** 现在已经几乎不更新，当初「复杂工作，就用 TraeWork」的口号基本停在了原地。办公想省心，还是从下面这几家里选。
 
-* * *
+### 腾讯 WorkBuddy
 
-## 2026 行业格局：四个正在发生的变化
+* [官网](https://www.workbuddy.cn/)
 
-如果你半年没关注这个圈子，下面这几件事可能会颠覆你的认知。
+目前跑得最快的那个，官网口径「AI Agent 办公新范式」。主打「一人指挥，全行业专家执行」，多个 Agent 并行协作，能切 5 家主流模型；桌面、微信小程序、主流 IM 全平台免部署即用，甚至能用手机远程指挥家里电脑干活。最近又发了企业版和覆盖 20 多个垂直场景的 Agent Suite，配上管理后台。经 2000 多个腾讯内部员工实测，号称 10 分钟上手。
 
-**1. 单点工具集体消失，平台开始互相吞噬**
+### 豆包工作
 
-这是今年最大的主题。Google 把 Gemini CLI 和 Code Assist 整个吞进了 Antigravity；Cognition 把 Windsurf 吃掉变成 Devin Desktop；微软在推进把 Copilot 各端合成一个统一应用；字节把 Trae 升级成 Code/Work/Design 三模式的 TraeWork 大平台。单独存在的"AI 编程插件"这条路已经走到头了，大家都在拼全家桶。
+* [官网](https://www.doubao.com/download/desktop)
 
-**2. 办公 Agent 成了新战场**
+字节 8 月 25 号刚发布的全新品牌。写文档、做 PPT、搞表格、整理会议纪要是基本功，还能搭系统、操作虚拟桌面和浏览器，配了定时任务、技能（Skills）和连接器体系。最大的差异化是用飞书账号登录后直接继承你在飞书里的全部工作上下文——字节是想拿豆包 3.82 亿的 C 端月活往 B 端撕口子。
 
-前面已经单独聊过 WorkBuddy、豆包工作、千问办公的三强争霸了。补充一个视角：这是三大厂头一回在同一个新品类里贴身肉搏——腾讯靠社交流量入口，阿里死磕 B 端基建加钉钉，字节指望豆包 3.82 亿月活往企业市场撕口子。谁赢都不意外，但「AI 替你上班」这个心智一旦立住，桌面入口的价值会被重新定价。
+### 千问办公 QwenWork
 
-**3. 免费时代正式结束了**
+* [官网](https://www.aliyun.com/product/qwenwork)
 
-上半年好几件事叠在一起：GitHub Copilot 全面转按用量计费；智谱 Coding Plan 涨价改成积分制；TRAE 给免费用户上对话限额；通义灵码更名后收缩免费功能。去年那种"零成本白嫖旗舰模型"的好日子没有了，现在的问题是各家都在摸索怎么把你变成付费用户。
+阿里的打法是「三合一」，由 QoderWork、MuleRun 和悟空整合而来，业内第一个同时覆盖桌面端 Agent、云端 Agent、企业协同 Agent 三种形态的产品。PPT、数据分析、网页生成到在线发布一条龙，桌面版已上线，后面会深度内置钉钉。
 
-**4. 从补全助手到自治工程**
+### 新入场者：Kimi Work
 
-所有人都在往"全自主"冲：Cursor 的 Composer 2.5 主打批量自主 Agent、Kiro 把自治 Agent 做成独立产品线、Devin Local 在本地无监督干活、Anthropic 让 Auto 模式当默认。你负责说清楚需求，剩下的交给它——这条路的尽头大概就是文本框即开发环境。当然翻车的案例也不少，去年底那次因为 Agent 权限放太开导致的宕机事故，算是给全行业提了个醒。
+* [官网](https://www.kimi.com/)
 
-* * *
+月之暗面 7 月放出旗舰模型之后，办公线也跟着补齐了：**Kimi Work** 是面向知识工作者的桌面 Agent，通过浏览器扩展操作浏览器，查看、总结、追踪网站都是常规操作；同门的 **Kimi Agent** 主打一键交付成果——文档、PPT、表格、建站、研究报告都能直接出。
 
-## 横评总结与选择建议
+办公这条线现在的逻辑很简单：模型厂都想把自己的 C 端月活导进「替你上班」这个场景。个人用户乐见其成，选边站的事横评那节说。
 
-| 工具  | 核心优势 | 主要缺点 | 适合人群 | 费用  |
-| --- | --- | --- | --- | --- |
-| Trae 国内版 | SOLO 全免、国产模型多、三模式工作台 | 新增对话限额、高峰限速 | 白嫖党、轻度使用 | 免费/积分制 |
-| Cursor | 自研 Composer 2.5、Origin 托管生态 | 只能付费玩 | 正经主力开发者 | $20/月起 |
-| OpenAI Codex | 模型迭代最快、GPT-5.6 已上线 | 5.4 系列即将退役需迁移 | GPT Plus 用户 | Plus 内含 |
-| Claude Code | 体验天花板、子 Agent 调度最强 | 封号风险、烧钱猛 | 重度开发者、不差钱 | $20~200/月 |
-| Qoder CN | Qwen 编程模型自研、迭代快 | 免费额度收缩 | Qwen 生态用户 | 专业版收费 |
-| Copilot CLI | GitHub 全家桶联动、Slack 集成 | 按 token 计费烧 Credits | 已有 GitHub 订阅者 | $10~39/月 |
-| Devin Desktop | 全自主愿景最近的产品 | 贵、企业向 | 不想写代码的团队 | 企业级 |
-| AWS Kiro | Spec 驱动、工程规范派 | 学习成本、绑定 AWS | 规范型团队 | $20~200/月 |
-| Lovable / Replit | 聊天式出品即上线 | 复杂项目不可控 | 非程序员、Demo 党 | 订阅制 |
-| DeepSeek dsh | MIT 开源、「一切皆插件」随便魔改 | 太新，生态要等 | 折腾型开发者、DIY 党 | 免费开源 |
-| ZCode + GLM 套餐 | 官方 Harness、GLM 深度适配、性价比之王 | 绑定智谱体系 | 预算敏感的技术党 | ¥118/月起 |
-| Kimi Code | Apache 2.0 真开源、K2.7 Code 能扛长任务 | 价格对免费党不友好 | 开源爱好者 | 按模型计费 |
-| 小米 MiMo Code | 免费、持久记忆系统、中文友好 | 复杂任务能力有限 | 轻度使用者 | 免费/Token Plan |
-| MiniMax Code | 桌面全家桶、M2.1 性价比高 | 重度使用费钱，要看紧钱包 | 中等强度开发 | Coding Plan 套餐 |
-| OpenCode | 近 20 万 Star、75+ 模型零锁定 | 得自己动手配 | 自由派极客 | 免费开源 |
-| 办公 Agent 三强 | WorkBuddy / 豆包工作 / 千问办公各占一头 | 入口割据得选边站 | 想让 AI 替自己上班的人 | 免费为主+企业版 |
-
-:::note[写在最后]
-AI 编程工具迭代太快了，这篇文章上周核对的行情这周就可能变。上半年的主旋律是「洗牌」：免费的变少了、独立的消失了、活下来的都变成了平台。我的建议是——留一个免费的当备胎（目前是 Trae），花钱买一个当主力（按预算选 Codex / Claude Code / Cursor），预算紧的组合拳是 GLM Coding Plan 接任意 CLI。本文会持续更新，有新的使用体验会追加进来。
+:::note
+个人轻度使用先试 WorkBuddy 或豆包工作；重度飞书用户选豆包工作；公司用钉钉和阿里云的，等千问办公内置钉钉后再上车不迟；想免费尝鲜浏览器自动化的，可以看看 Kimi Work。
 :::
 
 * * *
 
-## 主要参考来源
+## 三、横评总结与选择建议
 
-* [TRAE 官方定价页](https://www.trae.cn/pricing) · [火山引擎：SOLO 模式全量免费公告](https://developer.volcengine.com/articles/7598410727946682418)
-* [财联社：AI 办公三强争霸卡位战](https://www.cls.cn/detail/2463325)
-* [GitHub 官方博客：Copilot 转 ChatGPT 式按用量计费](https://github.blog/news-insights/company-news/github-copilot-is-moving-to-usage-based-billing/)
-* [OpenAI 模型发布记录](https://help.openai.com/en/articles/9624314-model-release-notes) · [ChatGPT 8 月更新说明](https://help.openai.com/am-et/articles/6825453-chatgpt-release-notes)
-* [Claude Code 官方 Weekly Updates](https://code.claude.com/docs/en/whats-new/2026-w27) · [Anthropic 产品发布记录](https://support.claude.com/en/articles/12138966-release-notes)
-* [InfoWorld：Google 统一旗下 AI 编程工具至 Antigravity](https://www.infoworld.com/article/4175416/google-to-unify-ai-coding-tools-under-antigravity.html)
-* [Devin 官方博客：Windsurf 变身 Devin Desktop](https://devin.ai/blog/windsurf-is-now-devin-desktop) · [TechCrunch：Cognition 洽谈 400 亿估值](https://techcrunch.com/2026/08/12/ai-coding-startup-cognition-reportedly-already-in-talks-to-raise-at-40b-valuation/)
-* [Cloudflare 博客：发布 Agent 专用浏览器 Kitesurf](https://blog.cloudflare.com/kitesurf/) · [Replit 融资公告](https://replit.com/news/funding-announcement)
-* [InfoQ：通义灵码更名 Qoder CN](https://xie.infoq.cn/article/75bc1250a8a4783902a0de1ce) · [Qoder CN 官方更新日志](https://help.aliyun.com/zh/lingma/qoder-cn-update-log)
-* [智谱 GLM Coding Plan 官方文档](https://docs.bigmodel.cn/cn/coding-plan/overview) · [新浪财经：CodeBuddy Code 2.0 发布](https://finance.sina.com.cn/stock/t/2026-01-22/doc-inhieikt4685574.shtml)
-* [知乎专栏：DeepSeek Harness 深度研究](https://zhuanlan.zhihu.com/p/2071546145608880421)
-* [腾讯 WorkBuddy 官网](https://www.workbuddy.cn/) · [ZCode 官网](https://zcode.z.ai/cn) · [OSCHINA：ZCode 3.0 发布](https://www.oschina.net/news/458812)
-* [月之暗面开放平台（K2.7 Code）](https://platform.kimi.com/) · [小米 MiMo Code 发布公告](https://mimo.mi.com/docs/zh-CN/news/latest/mimocode)
-* [MiniMax Code 官方文档](https://agent.minimaxi.com/docs/code/welcome) · [品玩：MiniMax 发布 MMX-CLI](https://www.pingwest.com/w/312786) · [OpenCode 官网](https://opencode.ai/zh)
+### 编程 Agent
+
+| 工具 | 核心优势 | 主要缺点 | 适合人群 | 费用 |
+| --- | --- | --- | --- | --- |
+| Claude Code | 体验天花板、子 Agent 调度最强 | 封号风险、烧钱猛 | 重度开发者、不差钱 | $20~200/月 |
+| OpenAI Codex | 云端软件工程团队、多 Agent 并行 | 依赖 GPT 账号 | GPT Plus 用户 | Plus 内含，Pro $200 起 |
+| Cursor | Composer 2.5 + Origin 生态、Projects 多 Agent | 只能付费玩 | 正经主力开发者 | $20/月起 |
+| Qoder CN | 产品家族全、Qwen 生态 | 免费额度收缩 | Qwen 生态用户 | 专业版收费 |
+| ZCode + GLM 套餐 | 官方 Harness、多智能体、可接 20+ 工具 | 绑定智谱体系 | 预算敏感的技术党 | Lite ¥94/月起 |
+| MiniMax Code | 桌面全家桶、电脑操控、双模式 | 重度使用费钱，要看紧钱包 | 中等强度开发 | 订阅制 |
+| OpenCode | 20.8 万 Star、75+ 模型零锁定、月活 1600 万 | 得自己动手配 | 自由派极客 | 免费开源 |
+| DeepSeek dsh | MIT 开源、「一切皆插件」、桌面端 + 官方插件 | 还在公开预览，生态要等 | 折腾型开发者、DIY 党 | 免费开源 |
+
+### 办公 Agent
+
+| 工具 | 核心优势 | 主要缺点 | 适合人群 | 费用 |
+| --- | --- | --- | --- | --- |
+| 腾讯 WorkBuddy | 访问量断层第一、全平台、多 Agent 并行 | 选边腾讯生态 | 想让 AI 替自己上班的人 | 免费为主 + 企业版 |
+| 豆包工作 | 飞书上下文继承、Skills / 连接器体系 | 偏字节生态 | 重度飞书用户 | 免费为主 |
+| 千问办公 QwenWork | 三种形态合一、将内置钉钉 | 公测中，生态待成熟 | 阿里云 / 钉钉企业 | 公测免费 |
+| Kimi Work | 浏览器自动化、Kimi Agent 一键交付 | 刚起步、偏个人知识工作 | 免费尝鲜党 | 免费 |
+
+:::note[写在最后]
+AI 编程工具迭代太快了，这篇文章上月核对的行情这个月就可能变。今年的主旋律是「平台化」：免费的变少了、独立的消失了、活下来的都变成了平台。我的建议是——留一个免费的当备胎（目前是开源的 OpenCode 或 dsh），花钱买一个当主力（按预算选 Codex / Claude Code / Cursor），预算紧的组合拳是 GLM Coding Plan Lite 接任意 CLI。办公那边不用想太多，WorkBuddy 起步、按你的 IM 生态选边。本文会持续更新，有新的使用体验会追加进来。
+:::
