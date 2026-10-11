@@ -9,8 +9,8 @@ type BlogEntryWithLocaleStatus = {
 const CATEGORY_PARAM_PREFIX = 'b64-';
 export const STUDY_NOTE_CATEGORY = '学习笔记';
 export const MATH_CATEGORY = '数学';
-export const MATH_SUBJECTS = new Set(['高数', '线代', '复变函数']);
-const STUDY_NOTE_SUBCATEGORIES = new Set(['电路', '数电', '模电', '大物', '英语笔记']);
+export const MATH_SUBJECTS = new Set(['高数', '线代', '复变函数', '概率论']);
+const STUDY_NOTE_SUBCATEGORIES = new Set(['电路', '数电', '模电', '大物', '英语笔记', '数据结构']);
 
 // 浏览器兼容的 base64url 编解码（不依赖 Node 的 Buffer）
 function toBase64Url(input: string): string {
