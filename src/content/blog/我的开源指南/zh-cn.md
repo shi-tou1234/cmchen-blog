@@ -1,7 +1,7 @@
 ---
 title: 我的开源指南
 pubDate: 2026-08-10T07:22:00.000Z
-updatedDate: 2026-09-30T09:20:00.000Z
+updatedDate: 2026-10-31T14:46:00.000Z
 draft: false
 description: 
 category: 随笔
@@ -10,7 +10,7 @@ categories:
 slugId: 我的开源指南
 ---
 
-怎么看待我的开源项目。GitHub 上目前 11 个仓库，分三类：博客与主页、学习与电子信息工具箱、桌面效率工具。下面逐个说清楚它们能干什么、怎么用、用的时候注意什么。
+怎么看待我的开源项目。GitHub 上目前 14 个仓库，分三类：博客与主页、学习与电子信息工具箱、桌面效率工具。下面逐个说清楚它们能干什么、怎么用、用的时候注意什么。
 
 * * *
 
@@ -35,6 +35,12 @@ slugId: 我的开源指南
 用的时候，clone 下来 `npm install` 后 `npm run dev`，Windows 双击 `start.bat` 一键启动。想改成自己的主页，把 JSON 里的资料换掉、换掉 `public/videos/` 里的背景视频就行。推 main 分支后 Actions 自动部署到 GitHub Pages。
 
 注意：后台密码是 PBKDF2 哈希存在 `public/admin-security.json` 里，忘了只能跑 `node scripts/gen-admin-hash.mjs <新密码>` 重新生成；进后台要填 fine-grained Personal Access Token，只勾本仓库的 Contents: Read and write 就够，权限给多了没必要；关于区的富文本只解析 em/strong/b/i/br 这几个标签，塞原始 HTML 不会生效；旅行足迹要在博客那边改，主页只能读；运行时抓博客最新文章依赖博客站与主页同源，博客绑了自定义域名就得补 CORS；`shots/` 下还留着一套验收探针脚本，动效这种机器判不了手感的东西靠它们用数字盯住，改完动效跑一遍比自己盯屏幕靠谱。
+
+**riji**（AI 开发日记）是一个只干一件事的站：把 agent 写的开发日记按日志形式摆出来——一个人，和一整支 AI 队伍，每给一个项目扔一批活，就有一篇日记落在这里。技术上刻意做小：依赖只有 Astro 一个，没有后台、没有数据库、没有登录，配色松石青，字体走本机回退栈，不拉任何 CDN。
+
+用的时候，`pnpm install` 后 `pnpm dev` 本地预览；发一篇日记就是往 `src/content/diary/` 丢一个 `YYYY-MM-DD-标题.md`，frontmatter 只有 title、date、summary、draft 四个字段，也可以用 `pnpm new "标题"` 生成草稿骨架，或者直接让 agent 替你把文件写进去，然后 `pnpm build`。推到 main 后 Actions 自动部署，线上地址 https://shi-tou1234.github.io/riji/ 。
+
+注意：改仓库名时要同步改 `astro.config.mjs` 里的 `base`，否则站内链接 404；`draft: true` 的文件不构建、不上线，改成 `false` 即发布；想变成自己的站，改 `src/config.ts` 里的站名和标语就行，全部页面逻辑就在 `src/components/` 和 `src/pages/` 那七个文件里，没有别处。
 
 * * *
 
@@ -111,9 +117,25 @@ slugId: 我的开源指南
 
 注意：运行时依赖只有 PySide6-Essentials 一个包，但打包后的单文件 exe 约 36 MB，别嫌大，Qt 就这个价。Linux 下 Wayland 会话里"固定在桌面"受系统限制，会自动降级成普通窗口行为，想要桌面模式得用 X11。
 
+**cmchen-u-agent**（U 盘便携 AI Agent）是把一支 AI 编程队装进口袋：整个文件夹放进 U 盘，插到任何一台 Windows 10/11 x64 电脑上，双击 `启动U-Agent.bat`，浏览器自动打开本地聊天页，agent 就能操作那台电脑上的文件——文件读写、命令执行、git、联网搜索、派子 agent 的完整能力都有。宿主机零安装、零配置、零残留，拔盘即走。第一次用分三步：`setup-uagent.bat` 从 npmmirror 下便携版 Node 22 到 `runtime\`（只联网这一次，之后任何电脑上跑都不依赖宿主机）；启动后设置启动密码，密码跟着盘走，换电脑还是这一个；设置里配工作区（agent 默认只能读写这个目录和 U 盘）和模型通道——24 家厂商协议都预置好了，OpenAI Chat Completions / OpenAI Responses / Anthropic Messages 三协议，GLM、DeepSeek、OpenAI、Anthropic、OpenRouter、OpenCode Zen/Go、本机 Ollama 填钥匙即用；不想配钥匙也有内置离线向导，不联网不花钱，专门用来看懂这个工具。
+
+能力对着主流 agent 工具来：权限五档（确认 / 只读 / 计划 / 自动审批 / 完全权限，七类动作可单独勾免问）；一键撤销——agent 每次改文件前留备份，「本轮改动」卡上点两下全恢复；说错话可以「从这儿重来」回退对话；自定义命令和技能放 `.agent\commands\`、`.agent\skills\` 就生效；配好 test/lint 后改完文件自动验、没过它自己修；计划模式点「批准执行」才动手；`/goal 测试全绿且文档写清楚` 定完成标准，每轮自动判定有没有实据；后台任务、默认 4 路的并行工具、思考过程流式展示、连跑三次防死循环；上下文涨到 80% 自动压成交接摘要且最近一段原文保留，请求前缀逐字节稳定设计让前缀缓存一路命中，长任务省钱；会话日志按 JSONL 追加全存 U 盘，跨会话记忆在 `data\memory.md` 且 agent 自己能记；刷新页面、断网、切走再切回都能接回正在跑的那轮长任务，点「停止」连子进程树一起终止；288 项测试全绿。界面中英双语，人格有 5 个预设加长度/风格/语言三个正交档位。
+
+用的时候，git clone 或 Download ZIP 后把文件夹放进 U 盘（或电脑上任意目录）就算安装位置——放哪、文件夹叫什么都随意，脚本全是相对路径。删掉整个文件夹等于卸载干净，拷到新盘新电脑等于搬家完成。
+
+注意：克隆下来是干净源码，`runtime\`、`data\`、`config.json` 都不在 git 里，首次要自己跑 setup 和配置；安全上，这只盘带着你的密码锁和加密钥匙库（`data\vault.bin`），只在自己开的电脑上用——服务只听 127.0.0.1，手机和局域网里别的机器连不上是故意的，盘别外借；连不上模型时报错会说清是钥匙、地址还是协议的问题；像 OpenCode Zen/Go 这类按模型分协议的网关，选中模型自动切协议，把整条接口地址粘进服务地址也会自动纠偏。
+
+**cmchen-document**（Trove）是一个本地优先的文献管理与阅读器，Electron 写的 Windows 桌面程序：把题录、PDF、阅读进度、标注、笔记和引用放进同一个库里，数据存在自己机器上，不用账号、不强制联网。边界先说清：它是「库 + 阅读器」，不是云同步服务——没有群组库、浏览器插件和 Word 自动引注，联网只发生在你主动要求的时刻（抓元数据、下 PDF、刷订阅）。给长期读文献并留痕的人（研究生、做综述的工程师），偶尔翻两篇 PDF 的话它偏重。
+
+功能覆盖文献工作全流程：37 类题录，标签、嵌套收藏集、智能收藏集，多选批量编辑、回收站、查重合并；BibTeX、RIS、CSL-JSON、EndNote（含 XML）、RefWorks、Zotero RDF、MARCXML 十来种格式互导；导入本地 PDF 自动从首页找 DOI / arXiv 走 Crossref / arXiv 补全题录，附件记文件指纹，文件改名或挪走后按指纹批量认回；开放获取下载走 Unpaywall / OpenAlex / Semantic Scholar / Europe PMC 四路索引，支持填 EZproxy 式代理前缀和 OpenURL 基址；RSS 订阅期刊和 arXiv 源，感兴趣的收进库；阅读器基于 PDF.js，多标签续读、双页对开、整页旋转、分屏参考页可跨文档对照正文和补充材料、重排阅读把一页文字按坐标还原成段落连续看、点 `[12]` 这类引用标记跳参考文献、引用跟随还能把那篇文献直接开到右栏对照栏（判定拿不准就不跳，不会乱开）；朗读按句跨页进行，别的程序读不了的地方它自己接上；标注十来种工具配印章（已阅/存疑/★/✓/待办按 `S` 切过去点一下落章），能导入 PDF 自带批注含回复关系，导出 MD/CSV/TXT、带中文子集嵌入字体的带标注 PDF 副本、或者整个「批注归档」zip 给别人继续改；标注还能按间隔重复推回来复习——先自己回想再揭晓，1-4 评分决定下次见面时间，大纲页签还能缩进收起。库级写操作 20 步撤销重做。第一次用先按 `F1`：软件内置 74 节可搜索的使用指南，带「在界面定位」的节会关掉指南、把对应的按钮滚到视野里闪两下。
+
+用的时候，直接用 Release 里的便携版或安装版；从源码跑要 Node.js 18+ 和 Windows：`npm ci` 后先 `npm run copy-pdfjs`（PDF.js 文件不进 git，首次克隆必须执行），再 `npm start`。
+
+注意：面向 Windows 10/11 构建与验证，macOS / Linux 没做打包验收，代码没有硬依赖 Windows API 但不承诺开箱可用；数据是本地的 JSON，不在云端，换电脑要自己带库、记得备份；代理版下载排在直连之后，学校没买的库别指望它凭空变出来。
+
 * * *
 
-这些项目之间是能咬合的：links 查到芯片、box 记库存；study-platform 一个页面顶了过去计算器、真值表两个仓库，配 desktopbox 把课件和数据分筐摆好；yulan 写下的 Markdown 正好是 blog 吃的格式，预览确认没问题再发；word 背单词、clock 看时间，都是每天真在用的东西。
+这些项目之间是能咬合的：links 查到芯片、box 记库存；study-platform 一个页面顶了过去计算器、真值表两个仓库，配 desktopbox 把课件和数据分筐摆好；yulan 写下的 Markdown 正好是 blog 吃的格式，预览确认没问题再发；要读的文献交给 Trove 排队、标注、回顾，写论文时随手引用；插着 U 盘里的 u-agent，走到哪台电脑它都能接着帮你改代码；riji 上那本日记，记的正是这里面每个项目是怎么一步步长出来的。word 背单词、clock 看时间，都是每天真在用的东西。
 
 你可以按需取用，也可以全部拉下来跑一遍，看看我平时在折腾什么。
 
