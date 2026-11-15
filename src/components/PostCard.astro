@@ -69,12 +69,6 @@ const pageUrl = getRelativeLocaleUrl(currentLang, "/blog/" + url);
     <a href={pageUrl} aria-label={cardLabel} class="post-card__stretched-link"></a>
 
     <div class:list={["post-card__cover", { "post-card__cover--placeholder": !hasImage }]}>
-        {pinned && (
-            <span class="post-card__pinned-badge">
-                <span class="post-card__pinned-dot"></span>
-                置顶
-            </span>
-        )}
         {hasImage && <ImageModule src={coverSrc} alt={title} class="post-card__image" />}
         {!image && externalImage && photographer && (
             photographerUrl ? (
@@ -90,8 +84,14 @@ const pageUrl = getRelativeLocaleUrl(currentLang, "/blog/" + url);
     </div>
 
     <div class="post-card__body">
-        {categories.length > 0 && (
+        {(pinned || categories.length > 0) && (
             <div class="post-card__tags">
+                {pinned && (
+                    <span class="post-card__pinned-badge">
+                        <span class="post-card__pinned-dot"></span>
+                        置顶
+                    </span>
+                )}
                 {categories.map((category) => (
                     <span class="post-card__tag" style={getTagStyle(category)}>#{category}</span>
                 ))}
@@ -302,10 +302,6 @@ const pageUrl = getRelativeLocaleUrl(currentLang, "/blog/" + url);
     }
 
     .post-card__pinned-badge {
-        position: absolute;
-        top: 12px;
-        left: 12px;
-        z-index: 20;
         display: inline-flex;
         align-items: center;
         gap: 6px;

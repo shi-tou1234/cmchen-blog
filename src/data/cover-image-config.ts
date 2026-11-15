@@ -18,7 +18,7 @@ export interface CoverImageConfig {
 export const coverImageConfig: CoverImageConfig = {
   enabled: true,
 
-  provider: (import.meta.env.COVER_IMAGE_PROVIDER as CoverImageProvider) || 'pexels',
+  provider: (import.meta.env.COVER_IMAGE_PROVIDER as CoverImageProvider) || 'picsum',
 
   apiKey: (import.meta.env.COVER_IMAGE_API_KEY as string) || '',
 

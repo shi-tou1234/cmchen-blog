@@ -113,6 +113,10 @@ pnpm run dist:electron    # 一键打包：桌面形态构建 + 精简 electron 
 
 仓库内置 GitHub Actions 工作流（`.github/workflows/deploy.yml`）：推送到 `main` 后自动构建并发布到 GitHub Pages。构建包含两步：`astro build` 与 `pagefind` 索引生成。注意 `astro.config.mjs` 中 `site` 与 `base` 需与实际的 Pages 地址一致。
 
+构建会跨运行缓存 Astro 的图片处理结果、封面 API 查询结果及成功获取的 Picsum 原图，并在 Actions 摘要中分别记录 Astro、封面缓存和 Pagefind 用时。Picsum 直接生成原有 seed 地址，不在生成每篇文章时重复请求图片列表。部署阶段将成功下载的原图保存为本站静态资源；源站不可达时仅探测一次并保留原地址，不改用其他照片。首次缓存是否成功取决于构建环境能否连接 Picsum。
+
+默认使用 Picsum，无需 Key。如需切换到 Pexels / Unsplash / Pixabay，在仓库 Actions secrets 中设置 `COVER_IMAGE_API_KEY`，并在 Actions variables 中设置 `COVER_IMAGE_PROVIDER`（`pexels`、`unsplash`、`pixabay` 或 `picsum`）。Key 只在构建阶段使用，不写入页面；其他服务保留构建内请求复用和查询缓存。未缓存的外部封面仍由访客浏览器向图片服务加载，构建成功不代表这些图片一定可访问。
+
 ## 致谢
 
 - 本项目 fork 自 [motues/Momo](https://github.com/motues/Momo) 并在其设计上深度进化，自定义样式语法与脚注样式参考了 Momo 的实现。
