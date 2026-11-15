@@ -113,9 +113,16 @@ pnpm run dist:electron    # 一键打包：桌面形态构建 + 精简 electron 
 
 仓库内置 GitHub Actions 工作流（`.github/workflows/deploy.yml`）：推送到 `main` 后自动构建并发布到 GitHub Pages。构建包含两步：`astro build` 与 `pagefind` 索引生成。注意 `astro.config.mjs` 中 `site` 与 `base` 需与实际的 Pages 地址一致。
 
-构建会跨运行缓存 Astro 的图片处理结果、封面 API 查询结果及成功获取的 Picsum 原图，并在 Actions 摘要中分别记录 Astro、封面缓存和 Pagefind 用时。Picsum 直接生成原有 seed 地址，不在生成每篇文章时重复请求图片列表。部署阶段将成功下载的原图保存为本站静态资源；源站不可达时仅探测一次并保留原地址，不改用其他照片。首次缓存是否成功取决于构建环境能否连接 Picsum。
+封面采用「**每篇一张专属图、精选池 + 自动补齐**」，完全不需要 API Key：
 
-默认使用 Picsum，无需 Key。如需切换到 Pexels / Unsplash / Pixabay，在仓库 Actions secrets 中设置 `COVER_IMAGE_API_KEY`，并在 Actions variables 中设置 `COVER_IMAGE_PROVIDER`（`pexels`、`unsplash`、`pixabay` 或 `picsum`）。Key 只在构建阶段使用，不写入页面；其他服务保留构建内请求复用和查询缓存。未缓存的外部封面仍由访客浏览器向图片服务加载，构建成功不代表这些图片一定可访问。
+- 每篇文章按 ID 的 sha256 生成唯一文件名（`public/covers/<hash>.webp`），106 篇互不重复。
+- 图库由三部分组成：人工筛过的 Unsplash 精选照片、`cn.bing.com` 每日壁纸（专业风光大片），以及从 Pexels CDN 里按亮度/色彩/熵/肤色等规则筛出的风景静物。明显不合格的图片编号记录在 `script/cover-rejects.json`，永久拉黑。
+- `pnpm run covers:curated`：重新拉取精选照片、替换黑名单图片，并生成 `spare-*.webp` 预留池（当前 40 张）。
+- `pnpm run covers:ensure`：扫描文章，新文章**优先从预留池取一张，完全不联网**；预留耗尽才回退到 Pexels CDN 自动下载并做质量筛选。已有封面直接复用，旧文章封面永不改变；删除文章时自动清理孤儿图片与记录。
+- 已接入 `dev`、`build`、`build:desktop` 与 CI。图片随仓库提交，正常构建零网络请求。
+- 图源许可：Unsplash / Pexels 允许免费商用；Bing 每日壁纸版权归原作者。追溯信息见 `public/covers/manifest.json`。
+
+设置 `COVER_IMAGE_LOCAL_FALLBACK=false` 可改回 Picsum 随机照片外链（该域名在国内网络经常超时，届时 `cache:covers` 会在构建期尝试把原图下载为本站静态资源；源站不可达时仅探测一次并保留原地址）。如需按标题检索、让封面更贴题，可在 Actions secrets 中设置 `COVER_IMAGE_API_KEY`，并在 Actions variables 中设置 `COVER_IMAGE_PROVIDER`（`pexels`、`unsplash` 或 `pixabay`）；Key 只在构建阶段使用，不写入页面。
 
 ## 致谢
 

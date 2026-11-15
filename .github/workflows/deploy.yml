@@ -64,6 +64,7 @@ jobs:
           COVER_IMAGE_API_KEY: ${{ secrets.COVER_IMAGE_API_KEY }}
           COVER_IMAGE_PROVIDER: ${{ vars.COVER_IMAGE_PROVIDER }}
         run: |
+          pnpm run covers:ensure
           start=$SECONDS
           pnpm exec astro build
           echo "Astro build: $((SECONDS - start))s" >> "$GITHUB_STEP_SUMMARY"

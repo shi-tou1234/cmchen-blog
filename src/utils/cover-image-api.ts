@@ -1,5 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
+import { createHash } from 'node:crypto'
 import {
   coverImageConfig,
   buildSearchQuery,
@@ -242,6 +243,18 @@ async function searchPicsum(
   }
 }
 
+/**
+ * 每篇文章一张专属封面：文件名由文章 ID 的 sha256 派生，天然互不重复。
+ * 新增文章会得到全新的文件名，构建前的 ensure-post-covers 脚本负责把图补齐。
+ * BASE_URL 由 Astro 注入：站点部署是 /cmchen-blog/，桌面离线包是 /。
+ */
+function localCoverUrl(postId: string): string {
+  const normalized = postId.replace(/\\/g, '/').split('/')[0];
+  const filename = createHash('sha256').update(normalized).digest('hex').slice(0, 20) + '.webp';
+  const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
+  return `${base}/covers/${filename}`;
+}
+
 async function searchCoverImage(
   postId: string,
   query: string,
@@ -298,6 +311,13 @@ export async function resolveCoverImage(
   }
 
   if (!coverImageConfig.apiKey || coverImageConfig.provider === 'picsum') {
+    // 外链图源在国内经常超时，优先用随站点一起发布的本地封面。
+    if (coverImageConfig.localCoverFallback) {
+      const url = localCoverUrl(postId)
+      if (url) {
+        return { imageUrl: url, photographer: '', photographerUrl: '', source: 'fallback' }
+      }
+    }
     if (!coverImageConfig.apiKey && coverImageConfig.provider !== 'picsum' && !warnedMissingKey) {
       warnedMissingKey = true
       console.warn('[cover-image] 未收到图片服务 API Key，本次构建使用 Picsum 随机封面。')
