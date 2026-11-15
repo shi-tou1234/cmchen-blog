@@ -16,7 +16,7 @@ slugId: 我的开源指南
 
 ## 博客与主页
 
-**cmchen-blog** 是一个功能比较完整的静态博客，基于 Astro 构建，文章用 Markdown 写。它是从 motues 的 Momo fork 过来深度改造的：暖纸配色和中文衬线字体体系、整套移动端交互重做、一套可扩展的自定义 Markdown 样式，再加上不需要本地环境的 GitHub 在线管理后台。除了 Frontmatter 元数据、文章分类、标签系统、时间线归档页、阅读进度条、预计阅读时间、文章置顶，还有 RSS 订阅、数学公式（KaTeX / Typst）、代码高亮（Shiki）、全文搜索（Pagefind）、字号 80%–150% 滑杆调节（偏好写进 localStorage 长期记住）、全屏沉浸阅读、深色模式跟随系统、AOS 滚动动画、粒子背景、页面切换过渡动画，以及音乐卡片、GitHub 卡片、引用块、提示框、推导过程浮层这些自定义 Markdown 组件。数据可视化有旅行地图城市标记和 Git 提交热力图，社交分享带完整的 Open Graph / Twitter Card。移动端专门重做过：收拢式浮动按钮，一个圆钮展开菜单、目录、返回上一页、评论、回顶，配底部导航栏和独立的 `/tools` 工具栏页。
+**cmchen-blog** 是一个功能比较完整的静态博客，基于 Astro 构建，文章用 Markdown 写。它是从 motues 的 Momo fork 过来深度改造的：暖纸配色和「界面无衬线 + 正文衬线」的字体体系、整套移动端交互重做、一套可扩展的自定义 Markdown 样式，再加上不需要本地环境的 GitHub 在线管理后台。除了 Frontmatter 元数据、文章分类、标签系统、时间线归档页、阅读进度条、预计阅读时间、文章置顶，还有 RSS 订阅、数学公式（KaTeX / Typst）、代码高亮（Shiki）、全文搜索（Pagefind）、字号 80%–150% 滑杆调节（偏好写进 localStorage 长期记住）、全屏沉浸阅读、深色模式跟随系统、卡片入场动画、页面切换过渡动画，以及音乐卡片、GitHub 卡片、引用块、提示框、推导过程浮层这些自定义 Markdown 组件。数据可视化有旅行地图城市标记和 Git 提交热力图，社交分享带完整的 Open Graph / Twitter Card。移动端专门重做过：收拢式浮动按钮，一个圆钮展开菜单、目录、返回上一页、评论、回顶，配底部导航栏和独立的 `/tools` 工具栏页。
 
 用的时候，clone 仓库到本地，按 README 里的步骤改 `astro.config.mjs` 里的 `site` 和 `base` 成你自己的部署地址，推到 GitHub 后把仓库 `Settings → Pages` 的 Source 设成 GitHub Actions，就会自动构建发布。后台地址是 `/admin/`，第一次进入时设置密码，之后写文章、改站点配置都在后台完成，不需要碰代码。
 

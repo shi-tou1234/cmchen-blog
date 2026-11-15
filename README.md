@@ -1,6 +1,6 @@
 # cmchen的博客
 
-一个基于 [Astro](https://astro.build) 构建的静态博客站点，fork 自 [motues/Momo](https://github.com/motues/Momo) 并进行了深度改造：暖纸配色与中文衬线字体体系、完整的移动端交互重做、一套可扩展的自定义 Markdown 样式，以及无需本地环境的 GitHub 在线管理后台。
+一个基于 [Astro](https://astro.build) 构建的静态博客站点，fork 自 [motues/Momo](https://github.com/motues/Momo) 并进行了深度改造：暖纸配色与「界面无衬线 + 正文衬线」的字体体系、完整的移动端交互重做、一套可扩展的自定义 Markdown 样式，以及无需本地环境的 GitHub 在线管理后台。
 
 线上地址：<https://shi-tou1234.github.io/cmchen-blog/>
 
@@ -20,9 +20,11 @@
 
 - **主题系统**：明亮（暖纸色）/ 暗黑（暖深色）/ 跟随系统三种模式，切换时以按钮为圆心的圆形揭示动画过渡，尊重 `prefers-reduced-motion`
 - **字号调节**：正文字号 80%–150% 滑杆调节，偏好写入 localStorage 长期记住
+- **文章列表**：960px 单列图文融合卡片，封面占 56% 并左右交替，文字区始终按自然顺序阅读；无封面时降级为纯文字卡片
 - **阅读进度**：页面顶部全局进度条、浮动按钮上的进度环、目录面板内的进度百分比
 - **沉浸阅读**：文章页支持进入全屏阅读模式，自动隐藏导航与侧栏
 - **全文搜索**：基于 Pagefind 的本地索引搜索，带搜索历史与 `/`、`Ctrl/Cmd+K` 快捷键
+- **相关阅读**：文末（评论前）列出最多 4 篇同分类文章，可跳转分类页查看全部
 - **细节功能**：博客使用指南弹窗、一键复制邮箱、站点运行天数、图片灯箱、Giscus 评论（主题自动同步明暗）
 
 ### 移动端体验
@@ -61,9 +63,9 @@
 
 ### 界面与工程
 
-- **字体体系**：Noto Serif SC 正文、Ma Shan Zheng 站名、ZCOOL QingKe HuangYou 标语、ZCOOL KuaiLe 卡片标题、LXGW Bright 引用、JetBrains Mono 代码
-- **视觉主题**：暖纸浅色（`#fdf8f0`）与暗暖深色（`#1a1612`）双调色板，全部经 CSS 变量驱动
-- **动效**：tsparticles 粒子背景、Astro View Transitions 路由过渡、AOS 风格入场动画
+- **字体体系**：界面与卡片走系统无衬线栈（PingFang SC / 微软雅黑 / Noto Sans CJK SC），文章正文走中文衬线栈（Noto Serif SC / 宋体，18px / 1.95 行高），站名楷体、标语展示黑体、引用与代码另设字体，全站不依赖外部字体 CDN
+- **视觉主题**：暖纸浅色（`#f8f6f0`）与暗暖深色（`#211f1b`）双调色板，卡片圆角收敛为 15 / 12 / 7px 三档，全部经 CSS 变量驱动
+- **动效**：Astro View Transitions 路由过渡、基于 IntersectionObserver 的卡片入场动画，弹层退场与按压手感统一，不做常驻背景动画
 - **代码质量**：ESLint + Prettier + `astro check`
 
 ## 本地开发
