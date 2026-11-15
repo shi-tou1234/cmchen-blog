@@ -1,46 +1,46 @@
 ---
-import "@styles/global.css"
-import ImageModule from "./misc/ImageModule.astro";
+import '@styles/global.css';
+import '@styles/post-card.css';
+import ImageModule from './misc/ImageModule.astro';
 
 import { getRelativeLocaleUrl } from '@utils/url-utils';
-import { formatFullDate } from '@/utils/time'
+import { formatFullDate } from '@/utils/time';
 import { hashString } from '@utils/hash';
 
-
 interface Props {
-    title: string;
-    description: string;
-    image: string;
-    pubDate: Date;
-    updatedDate?: Date;
-    url: string;
-    fallback: boolean;
-    categories?: string[];
-    preview?: string;
-    readingMinutes?: number;
-    revealDelay?: number;
-    externalImage?: string;
-    photographer?: string;
-    photographerUrl?: string;
-    pinned?: boolean;
+  title: string;
+  description: string;
+  image: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  url: string;
+  fallback: boolean;
+  categories?: string[];
+  preview?: string;
+  readingMinutes?: number;
+  revealDelay?: number;
+  externalImage?: string;
+  photographer?: string;
+  photographerUrl?: string;
+  pinned?: boolean;
 }
 
 const {
-    title,
-    description,
-    image,
-    pubDate,
-    updatedDate,
-    url,
-    fallback,
-    categories = [],
-    preview = description,
-    readingMinutes = 1,
-    revealDelay = 0,
-    externalImage = '',
-    photographer = '',
-    photographerUrl = '',
-    pinned = false,
+  title,
+  description,
+  image,
+  pubDate,
+  updatedDate,
+  url,
+  fallback,
+  categories = [],
+  preview = description,
+  readingMinutes = 1,
+  revealDelay = 0,
+  externalImage = '',
+  photographer = '',
+  photographerUrl = '',
+  pinned = false,
 } = Astro.props;
 
 const currentLang = 'zh-cn';
@@ -49,364 +49,109 @@ const readingLabel = `${readingMinutes} 分钟阅读`;
 const previewText = String(preview || description || '').trim();
 const cardLabel = `阅读文章：${title}`;
 
-// 分类色与归档页同一套 --cat-slot 体系（8 档 × 45° 色相），明暗主题由 variables.css 接管
-function getTagStyle(tag: string): string {
-    return `--cat-slot:${hashString(tag) % 8};`;
-}
-
 // 本地封面优先，其次外部封面；两者都没有时只保留纯文字卡片
 const coverSrc = image || externalImage || '';
 const hasImage = Boolean(coverSrc);
+// Stable tones keep the approved canvas without extra image analysis requests.
+const coverTones = [
+  { light: '#edf0df', dark: '#293c31' },
+  { light: '#ece9df', dark: '#353b30' },
+  { light: '#e6eee2', dark: '#263a31' },
+  { light: '#eeeadf', dark: '#39382b' },
+];
+const coverTone = coverTones[hashString(url) % coverTones.length];
 
-const pageUrl = getRelativeLocaleUrl(currentLang, "/blog/" + url);
+const pageUrl = getRelativeLocaleUrl(currentLang, '/blog/' + url);
 ---
 
 <article
-    data-card-reveal
-    style={`--card-reveal-delay:${revealDelay}ms;`}
-    class:list={["post-card", hasImage ? "post-card--with-image" : "post-card--no-image"]}
+  data-card-reveal
+  style={`--card-reveal-delay:${revealDelay}ms;--post-card-light:${coverTone.light};--post-card-dark:${coverTone.dark};`}
+  class:list={['post-card', hasImage ? 'post-card--with-image' : 'post-card--no-image']}
 >
-    <a href={pageUrl} aria-label={cardLabel} class="post-card__stretched-link"></a>
+  <a href={pageUrl} aria-label={cardLabel} class="post-card__stretched-link"></a>
 
-    <div class:list={["post-card__cover", { "post-card__cover--placeholder": !hasImage }]}>
-        {hasImage && <ImageModule src={coverSrc} alt={title} class="post-card__image" />}
-        {!image && externalImage && photographer && (
-            photographerUrl ? (
-                <a href={photographerUrl} target="_blank" rel="noopener noreferrer" class="post-card__photo-credit" title={`Photo by ${photographer}`}>
-                    {photographer}
-                </a>
-            ) : (
-                <span class="post-card__photo-credit" title={`Photo by ${photographer}`}>
-                    {photographer}
-                </span>
-            )
-        )}
-    </div>
+  <div class:list={['post-card__cover', { 'post-card__cover--placeholder': !hasImage }]}>
+    {hasImage && <ImageModule src={coverSrc} alt={title} class="post-card__image" />}
+  </div>
 
-    <div class="post-card__body">
-        {(pinned || categories.length > 0) && (
-            <div class="post-card__tags">
-                {pinned && (
-                    <span class="post-card__pinned-badge">
-                        <span class="post-card__pinned-dot"></span>
-                        置顶
-                    </span>
-                )}
-                {categories.map((category) => (
-                    <span class="post-card__tag" style={getTagStyle(category)}>#{category}</span>
-                ))}
-            </div>
-        )}
+  {
+    !image &&
+      externalImage &&
+      photographer &&
+      (photographerUrl ? (
+        <a
+          href={photographerUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="post-card__photo-credit"
+          title={`Photo by ${photographer}`}
+        >
+          {photographer}
+        </a>
+      ) : (
+        <span class="post-card__photo-credit" title={`Photo by ${photographer}`}>
+          {photographer}
+        </span>
+      ))
+  }
 
-        <h2 class="post-card__title">
-            {title}
-            {fallback && <span class="post-card__lang">zh-cn</span>}
-        </h2>
-        <p class="post-card__summary">{previewText}</p>
-        <div class="post-card__meta">
-            <span>{formatFullDate(pubDate, currentLang)}</span>
-            {updatedDate && updatedDate.valueOf() > pubDate.valueOf() && (
-                <>
-                    <span class="post-card__meta-sep">•</span>
-                    <span>{`最后更新于 ${formatFullDate(updatedDate, currentLang)}`}</span>
-                </>
-            )}
-            <span class="post-card__meta-sep">•</span>
-            <span>{readingLabel}</span>
+  <div class="post-card__body">
+    {
+      (pinned || categories.length > 0) && (
+        <div class="post-card__tags">
+          {pinned && (
+            <span class="post-card__pinned-badge">
+              <span class="post-card__pinned-dot" />
+              置顶
+            </span>
+          )}
+          {categories.map((category) => (
+            <span class="post-card__tag">{category}</span>
+          ))}
         </div>
+      )
+    }
+
+    <h2 class="post-card__title">
+      {title}
+      {fallback && <span class="post-card__lang">zh-cn</span>}
+    </h2>
+    <p class="post-card__summary">{previewText}</p>
+    <div class="post-card__meta">
+      <span>{formatFullDate(pubDate, currentLang)}</span>
+      {
+        updatedDate && updatedDate.valueOf() > pubDate.valueOf() && (
+          <>
+            <span class="post-card__meta-sep">•</span>
+            <span>{`最后更新于 ${formatFullDate(updatedDate, currentLang)}`}</span>
+          </>
+        )
+      }
+      <span class="post-card__meta-sep">•</span>
+      <span>{readingLabel}</span>
+      <span class="post-card__direction" aria-hidden="true">↗</span>
     </div>
+  </div>
 </article>
 
-<style is:global>
-    /* H2：单列卡片，桌面图片 56% / 文字 62%，重叠渐变融合；奇偶交错只换图片侧，
-       文字始终按自然顺序阅读。悬停只保留颜色与极轻的图片变化。 */
-    .post-card {
-        position: relative;
-        isolation: isolate;
-        width: min(960px, 92vw);
-        max-width: 100%;
-        margin: 24px auto;
-        border: 1px solid var(--border-color);
-        border-radius: var(--radius-card-lg);
-        background: var(--card-bg-color);
-        box-shadow: var(--shadow-card);
-        overflow: hidden;
-        font-family: var(--font-sans);
-        transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
+<script>
+  import { onPageScoped } from '@utils/page-lifecycle';
 
-    .post-card__stretched-link {
-        position: absolute;
-        inset: 0;
-        z-index: 10;
-        border-radius: inherit;
-        outline: none;
-    }
-
-    .post-card__stretched-link:focus-visible {
-        outline: 2px solid var(--link-color);
-        outline-offset: 4px;
-    }
-
-    /* 图片侧：绝对定位不占文档流，奇偶交错 */
-    .post-card__cover {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        width: 56%;
-        z-index: -1;
-        overflow: hidden;
-        background: linear-gradient(135deg, var(--hover-bg-color), var(--border-color));
-    }
-
-    .post-card:nth-child(even) .post-card__cover {
-        right: auto;
-        left: 0;
-    }
-
-    /* 渐变让文字区落在稳定纸面色上，不直接压在照片上 */
-    .post-card__cover::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        background: linear-gradient(90deg,
-            var(--card-bg-color) 0%,
-            color-mix(in srgb, var(--card-bg-color) 88%, transparent) 30%,
-            transparent 62%);
-    }
-
-    .post-card:nth-child(even) .post-card__cover::after {
-        background: linear-gradient(270deg,
-            var(--card-bg-color) 0%,
-            color-mix(in srgb, var(--card-bg-color) 88%, transparent) 30%,
-            transparent 62%);
-    }
-
-    .post-card__cover--placeholder {
-        background: var(--postcard-placeholder-bg);
-        opacity: 0.55;
-    }
-
-    .post-card__image {
-        display: block;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center;
-        /* 图片失败时不露出破图图标与 alt 文本，卡片不塌陷、文字仍完整 */
-        color: transparent;
-        font-size: 0;
-        transition: transform 0.4s ease;
-    }
-
-    .post-card__body {
-        position: relative;
-        width: 62%;
-        min-height: 286px;
-        padding: 34px 40px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: 12px;
-        pointer-events: none;
-    }
-
-    .post-card:nth-child(even) .post-card__body {
-        margin-left: auto;
-        padding-left: 48px;
-    }
-
-    .post-card--no-image .post-card__body {
-        width: 100%;
-        min-height: 0;
-    }
-
-    .post-card--no-image:nth-child(even) .post-card__body {
-        padding-left: 40px;
-    }
-
-    .post-card__tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-    }
-
-    .post-card__tag {
-        --cat-hue: calc(var(--cat-slot, 0) * 45);
-        display: inline-flex;
-        align-items: center;
-        border-radius: 999px;
-        border: 1px solid var(--cat-tag-border);
-        background: var(--cat-tag-bg);
-        color: var(--cat-tag-color);
-        font-size: 11px;
-        line-height: 1;
-        padding: 4px 9px;
-        font-weight: 600;
-    }
-
-    .post-card__title {
-        margin: 0;
-        max-width: 460px;
-        font-family: var(--font-sans);
-        font-size: 24px;
-        line-height: 1.5;
-        font-weight: 650;
-        letter-spacing: -0.02em;
-        color: var(--text-color);
-        /* 长标题自然换行，不靠裁字维持整齐 */
-        overflow-wrap: anywhere;
-        transition: color 0.3s ease;
-    }
-
-    .post-card__lang {
-        margin-left: 8px;
-        padding: 1px 5px;
-        font-family: ui-monospace, monospace;
-        font-size: 11px;
-        font-weight: 400;
-        text-transform: uppercase;
-        color: var(--cover-subtitle-color);
-        background: var(--hover-bg-color);
-        border: 1px solid var(--border-color);
-        border-radius: var(--radius-card-sm);
-    }
-
-    .post-card__summary {
-        margin: 0;
-        max-width: 360px;
-        font-family: var(--font-sans);
-        font-size: 13px;
-        line-height: 1.9;
-        color: var(--muted-text-color);
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-
-    .post-card__meta {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 4px 12px;
-        font-family: var(--font-sans);
-        font-size: 11px;
-        color: var(--cover-subtitle-color);
-    }
-
-    .post-card__meta-sep {
-        opacity: 0.5;
-    }
-
-    .post-card__pinned-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 5px 10px;
-        border-radius: 999px;
-        background: color-mix(in srgb, var(--text-color) 72%, transparent);
-        color: var(--card-bg-color);
-        font-size: 11px;
-        font-weight: 600;
-        pointer-events: none;
-    }
-
-    .post-card__pinned-dot {
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        background: var(--link-color);
-    }
-
-    .post-card__photo-credit {
-        position: absolute;
-        bottom: 12px;
-        right: 14px;
-        z-index: 20;
-        font-size: 11px;
-        padding: 3px 9px;
-        border-radius: 999px;
-        background: color-mix(in srgb, var(--text-color) 68%, transparent);
-        color: #fffdf8;
-        pointer-events: auto;
-    }
-
-    .post-card__photo-credit:hover {
-        color: #fffdf8;
-        text-decoration: underline;
-    }
-
-    /* 悬停：只改颜色 + 极轻的图片变化，不做位移、放大、强投影与玻璃模糊 */
-    .post-card:hover {
-        border-color: color-mix(in srgb, var(--link-color) 24%, var(--border-color));
-    }
-
-    .post-card:hover .post-card__title {
-        color: var(--link-color);
-    }
-
-    .post-card:hover .post-card__image {
-        transform: scale(1.025);
-    }
-
-    /* 手机：统一上图下文的融合排版，不因交错改变阅读顺序 */
-    @media (max-width: 760px) {
-        .post-card {
-            margin: 20px auto;
-        }
-
-        .post-card--with-image {
-            padding-top: 160px;
-        }
-
-        .post-card__cover,
-        .post-card:nth-child(even) .post-card__cover {
-            width: 100%;
-            height: 220px;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: auto;
-        }
-
-        .post-card__cover::after,
-        .post-card:nth-child(even) .post-card__cover::after {
-            background: linear-gradient(0deg, var(--card-bg-color) 0%, transparent 90%);
-        }
-
-        .post-card__body,
-        .post-card:nth-child(even) .post-card__body,
-        .post-card--no-image .post-card__body,
-        .post-card--no-image:nth-child(even) .post-card__body {
-            width: 100%;
-            min-height: 0;
-            margin: 0;
-            padding: 14px 24px 26px;
-            gap: 10px;
-        }
-
-        .post-card__title {
-            font-size: 22px;
-            max-width: none;
-        }
-
-        .post-card__summary {
-            max-width: none;
-        }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .post-card,
-        .post-card__image,
-        .post-card__title {
-            transition: none !important;
-        }
-
-        .post-card:hover .post-card__image {
-            transform: none !important;
-        }
-    }
-</style>
+  onPageScoped((cleanup) => {
+    document.querySelectorAll<HTMLImageElement>('.post-card__image').forEach((image) => {
+      const card = image.closest<HTMLElement>('.post-card');
+      if (!card) return;
+      const syncImage = () => {
+        card.classList.toggle('post-card--image-error', image.complete && image.naturalWidth === 0);
+      };
+      image.addEventListener('load', syncImage);
+      image.addEventListener('error', syncImage);
+      cleanup(() => {
+        image.removeEventListener('load', syncImage);
+        image.removeEventListener('error', syncImage);
+      });
+      syncImage();
+    });
+  });
+</script>
