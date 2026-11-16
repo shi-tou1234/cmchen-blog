@@ -16,6 +16,12 @@
   font-family: var(--font-sans);
   color: var(--post-card-ink);
 }
+/* 桌面端恢复旧版「header 容器比卡片宽」的比例，给顶栏左右元素留出避让空间 */
+@media (min-width: 768px) {
+  .post-card {
+    width: min(960px, 84vw);
+  }
+}
 [data-theme='dark'] .post-card {
   --post-card-tone: var(--post-card-dark);
   --post-card-ink: #f0f1e7;

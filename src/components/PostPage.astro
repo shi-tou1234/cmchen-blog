@@ -130,6 +130,9 @@ const resolvedCovers = await Promise.all(
         /* 与 H2 图文融合卡片同宽，加载态切到成品不跳宽度 */
         --post-card-width: min(960px, 92vw);
     }
+    @media (min-width: 768px) {
+        .post-list-shell { --post-card-width: min(960px, 84vw); }
+    }
 
     .post-list-content {
         opacity: 0;
