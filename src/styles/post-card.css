@@ -1,5 +1,6 @@
 /* A · 浅色漫染：封面与文字共享一个连续画面。 */
 .post-card {
+  --post-card-fade-angle: 90deg;
   --post-card-tone: var(--post-card-light);
   --post-card-ink: #2b382c;
   --post-card-muted: #5d6d5c;
@@ -44,7 +45,8 @@
 }
 .post-card__cover {
   position: absolute;
-  inset: 0;
+  inset: 0 0 0 auto;
+  width: 62%;
   z-index: -2;
   overflow: hidden;
 }
@@ -56,18 +58,17 @@
   pointer-events: none;
   background:
     linear-gradient(
-      90deg,
+      var(--post-card-fade-angle),
       var(--post-card-tone) 0%,
-      color-mix(in srgb, var(--post-card-tone) 98%, transparent) 14%,
-      color-mix(in srgb, var(--post-card-tone) 95%, transparent) 29%,
-      color-mix(in srgb, var(--post-card-tone) 83%, transparent) 40%,
-      color-mix(in srgb, var(--post-card-tone) 50%, transparent) 51%,
-      color-mix(in srgb, var(--post-card-tone) 10%, transparent) 67%,
-      transparent 80%
+      var(--post-card-tone) 40%,
+      color-mix(in srgb, var(--post-card-tone) 97%, transparent) 46%,
+      color-mix(in srgb, var(--post-card-tone) 65%, transparent) 50%,
+      color-mix(in srgb, var(--post-card-tone) 15%, transparent) 56%,
+      transparent 62%
     ),
     linear-gradient(
       0deg,
-      color-mix(in srgb, var(--post-card-tone) 15%, transparent),
+      color-mix(in srgb, var(--post-card-tone) 8%, transparent),
       transparent 55%
     );
 }
@@ -91,7 +92,7 @@
   justify-content: center;
   min-height: 410px;
   width: 51%;
-  padding: 39px 0 37px 42px;
+  padding: 39px 16px 37px 42px;
   background: transparent;
   pointer-events: none;
 }
@@ -302,25 +303,37 @@
 .post-card--image-error .post-card__summary {
   max-width: 720px;
 }
+/* 桌面奇偶交替，文字仍保持从左到右的阅读顺序。 */
+@media (min-width: 761px) {
+  .post-list-content > .post-card:nth-of-type(even) {
+    --post-card-fade-angle: 270deg;
+  }
+  .post-list-content > .post-card--with-image:nth-of-type(even):not(.post-card--image-error) .post-card__cover {
+    inset: 0 auto 0 0;
+  }
+  .post-list-content > .post-card--with-image:nth-of-type(even):not(.post-card--image-error) .post-card__body {
+    margin-left: auto;
+    padding-left: 16px;
+    padding-right: 42px;
+  }
+  .post-list-content > .post-card--with-image:nth-of-type(even):not(.post-card--image-error) .post-card__photo-credit {
+    right: auto;
+    left: 17px;
+  }
+}
 @media (min-width: 761px) and (max-width: 1050px) {
   .post-card__body {
-    width: 55%;
+    width: 51%;
     min-height: 400px;
     padding-left: 32px;
     padding-right: 10px;
   }
+  .post-list-content > .post-card--with-image:nth-of-type(even):not(.post-card--image-error) .post-card__body {
+    padding-left: 10px;
+    padding-right: 32px;
+  }
   .post-card__title {
     font-size: 25px;
-  }
-  .post-card::before {
-    background: linear-gradient(
-      90deg,
-      var(--post-card-tone) 0%,
-      color-mix(in srgb, var(--post-card-tone) 97%, transparent) 26%,
-      color-mix(in srgb, var(--post-card-tone) 87%, transparent) 43%,
-      color-mix(in srgb, var(--post-card-tone) 38%, transparent) 59%,
-      transparent 80%
-    );
   }
 }
 @media (max-width: 760px) {
@@ -333,6 +346,13 @@
     min-height: 555px;
     justify-content: end;
     padding: 265px 25px 28px;
+  }
+  .post-card__cover {
+    inset: 0 0 auto;
+    width: 100%;
+    height: 340px;
+    mask-image: linear-gradient(180deg, #000 0%, #000 65%, transparent 100%);
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 65%, transparent 100%);
   }
   .post-card__title {
     font-size: 23px;
@@ -372,15 +392,7 @@
     height: 28px;
   }
   .post-card::before {
-    background: linear-gradient(
-      0deg,
-      var(--post-card-tone) 0%,
-      var(--post-card-tone) 21%,
-      color-mix(in srgb, var(--post-card-tone) 96%, transparent) 34%,
-      color-mix(in srgb, var(--post-card-tone) 79%, transparent) 45%,
-      color-mix(in srgb, var(--post-card-tone) 25%, transparent) 59%,
-      transparent 77%
-    );
+    background: none;
   }
   .post-card__image {
     object-position: center 30%;
