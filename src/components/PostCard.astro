@@ -47,6 +47,15 @@ const currentLang = 'zh-cn';
 
 const readingLabel = `${readingMinutes} 分钟阅读`;
 const previewText = String(preview || description || '').trim();
+const primaryCategory = categories[0] || '';
+const topicCategories = categories.slice(1, 3);
+const categoryIcon = /电|硬件|数电|模电/.test(categories.join(' '))
+  ? 'M8 8h8v8H8z M9 3v3m6-3v3M9 18v3m6-3v3M3 9h3m-3 6h3m12-6h3m-3 6h3'
+  : /随笔|生活|旅行/.test(primaryCategory)
+    ? 'M20 4C11 3 4 7 5 14c1 7 12 8 15-10Z M5 20l10-10'
+    : /工具|开发|编程/.test(primaryCategory)
+      ? 'm8 8-4 4 4 4m8-8 4 4-4 4m-3-11-2 14'
+      : 'M4 4h7c1 0 1 1 1 2v14c0-2-2-3-4-3H4z M20 4h-7c-1 0-1 1-1 2v14c0-2 2-3 4-3h4z';
 const cardLabel = `阅读文章：${title}`;
 
 // 本地封面优先，其次外部封面；两者都没有时只保留纯文字卡片
@@ -102,13 +111,16 @@ const pageUrl = getRelativeLocaleUrl(currentLang, '/blog/' + url);
         <div class="post-card__tags">
           {pinned && (
             <span class="post-card__pinned-badge">
-              <span class="post-card__pinned-dot" />
+              <svg class="post-card__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m16 3 5 5-4 2-3 5-5-5 5-3 2-4ZM3 21l7-7" /></svg>
               置顶
             </span>
           )}
-          {categories.map((category) => (
-            <span class="post-card__tag">{category}</span>
-          ))}
+          {primaryCategory && (
+            <span class="post-card__tag">
+              <svg class="post-card__icon" viewBox="0 0 24 24" aria-hidden="true"><path d={categoryIcon} /></svg>
+              {primaryCategory}
+            </span>
+          )}
         </div>
       )
     }
@@ -118,19 +130,26 @@ const pageUrl = getRelativeLocaleUrl(currentLang, '/blog/' + url);
       {fallback && <span class="post-card__lang">zh-cn</span>}
     </h2>
     <p class="post-card__summary">{previewText}</p>
+    {topicCategories.length > 0 && (
+      <div class="post-card__topics">
+        {topicCategories.map((category) => <span class="post-card__topic">{category}</span>)}
+      </div>
+    )}
+    <div class="post-card__bottom">
     <div class="post-card__meta">
-      <span>{formatFullDate(pubDate, currentLang)}</span>
+      <span><svg class="post-card__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14v15H5z M8 3v4m8-4v4M5 10h14" /></svg>{formatFullDate(pubDate, currentLang)}</span>
       {
         updatedDate && updatedDate.valueOf() > pubDate.valueOf() && (
           <>
             <span class="post-card__meta-sep">•</span>
-            <span>{`最后更新于 ${formatFullDate(updatedDate, currentLang)}`}</span>
+            <span class="post-card__updated">{`最后更新于 ${formatFullDate(updatedDate, currentLang)}`}</span>
           </>
         )
       }
       <span class="post-card__meta-sep">•</span>
-      <span>{readingLabel}</span>
-      <span class="post-card__direction" aria-hidden="true">↗</span>
+      <span><svg class="post-card__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" /><path d="M12 7v5l3 2" /></svg>{readingLabel}</span>
+    </div>
+    <span class="post-card__direction" aria-hidden="true"><svg class="post-card__icon" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6" /></svg></span>
     </div>
   </div>
 </article>

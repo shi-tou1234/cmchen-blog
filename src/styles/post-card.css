@@ -93,13 +93,16 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 17px;
+  gap: 9px;
+  margin-bottom: 13px;
   color: var(--post-card-muted);
   font-size: 11px;
   line-height: 1.4;
 }
 .post-card__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   color: inherit;
   font-size: inherit;
   font-weight: 400;
@@ -126,10 +129,10 @@
   opacity: 0.7;
 }
 .post-card__title {
-  margin: 0 0 17px;
+  margin: 0 0 12px;
   font-family: var(--font-sans);
-  font-size: 28px;
-  font-weight: 650;
+  font-size: 25px;
+  font-weight: 600;
   line-height: 1.55;
   letter-spacing: -0.6px;
   color: var(--post-card-ink);
@@ -148,7 +151,7 @@
 .post-card__summary {
   margin: 0;
   max-width: 430px;
-  font-size: 12px;
+  font-size: 13px;
   line-height: 1.95;
   color: var(--post-card-muted);
   display: -webkit-box;
@@ -171,10 +174,94 @@
   opacity: 0.5;
 }
 .post-card__direction {
-  font-size: 19px;
-  line-height: 1;
-  margin-left: 9px;
-  opacity: 0.55;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border: 1px solid color-mix(in srgb, var(--post-card-muted) 28%, transparent);
+  border-radius: 50%;
+  color: var(--post-card-muted);
+}
+/* E · 轻量组合：原有封面上补充分类图标、子分类与阅读入口。 */
+.post-card__icon {
+  display: inline-block;
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.post-card__tag .post-card__icon {
+  width: 20px;
+  height: 20px;
+}
+.post-card__pinned-badge .post-card__icon {
+  width: 11px;
+  height: 11px;
+}
+.post-card__topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 17px;
+}
+.post-card__topic {
+  padding: 4px 8px;
+  border: 1px solid color-mix(in srgb, var(--post-card-muted) 28%, transparent);
+  border-radius: 5px;
+  color: var(--post-card-muted);
+  font-size: 10.5px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.post-card__bottom {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 19px;
+}
+.post-card__bottom .post-card__meta {
+  flex: 1;
+  min-width: 0;
+  margin-top: 0;
+  gap: 4px 10px;
+  font-size: 10.5px;
+}
+.post-card__meta > span:not(.post-card__meta-sep) {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.post-card__meta .post-card__icon {
+  width: 12px;
+  height: 12px;
+  opacity: 0.65;
+}
+.post-card__meta-sep {
+  display: none;
+}
+.post-card__updated {
+  flex-basis: 100%;
+  order: 1;
+  font-size: 10px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .post-card__direction .post-card__icon {
+    transition: transform 0.18s ease;
+  }
+  .post-card:hover .post-card__direction .post-card__icon {
+    transform: translateX(2px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .post-card__direction .post-card__icon {
+    transition: none;
+  }
 }
 .post-card__photo-credit {
   position: absolute;
@@ -242,7 +329,7 @@
     padding: 265px 25px 28px;
   }
   .post-card__title {
-    font-size: 24px;
+    font-size: 23px;
     line-height: 1.55;
     letter-spacing: -0.4px;
     margin-bottom: 14px;
@@ -252,12 +339,31 @@
     margin-bottom: 15px;
   }
   .post-card__summary {
-    font-size: 11px;
+    font-size: 12px;
     max-width: none;
   }
   .post-card__meta {
     margin-top: 22px;
     gap: 5px 9px;
+  }
+  .post-card__topics {
+    gap: 6px;
+    margin-top: 15px;
+  }
+  .post-card__topic {
+    padding: 4px 7px;
+    font-size: 10px;
+  }
+  .post-card__bottom {
+    gap: 12px;
+    margin-top: 17px;
+  }
+  .post-card__bottom .post-card__meta {
+    font-size: 10px;
+  }
+  .post-card__direction {
+    width: 28px;
+    height: 28px;
   }
   .post-card::before {
     background: linear-gradient(
